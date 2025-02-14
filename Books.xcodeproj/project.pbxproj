@@ -11,6 +11,7 @@
 		BBBDE9012D5E896400CDCE10 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDE9002D5E896400CDCE10 /* ContentView.swift */; };
 		BBBDE9032D5E896700CDCE10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBBDE9022D5E896700CDCE10 /* Assets.xcassets */; };
 		BBBDE9102D5E896700CDCE10 /* BooksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDE90F2D5E896700CDCE10 /* BooksTests.swift */; };
+		BBDDD3EA2D5F93F50063EDAF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BBDDD3E92D5F93F40063EDAF /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		BBBDE90F2D5E896700CDCE10 /* BooksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksTests.swift; sourceTree = "<group>"; };
 		BBDDD3DE2D5F8D340063EDAF /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		BBDDD3DF2D5F8D940063EDAF /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		BBDDD3E92D5F93F40063EDAF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,10 +75,11 @@
 		BBBDE8FD2D5E896400CDCE10 /* Books */ = {
 			isa = PBXGroup;
 			children = (
+				BBDDD3E62D5F93790063EDAF /* App */,
 				BBDDD3DD2D5F8D1D0063EDAF /* Config */,
-				BBBDE8FE2D5E896400CDCE10 /* BooksApp.swift */,
 				BBBDE9002D5E896400CDCE10 /* ContentView.swift */,
-				BBBDE9022D5E896700CDCE10 /* Assets.xcassets */,
+				BBDDD3E72D5F938B0063EDAF /* Resources */,
+				BBDDD3E82D5F93E60063EDAF /* SupportingFiles */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -96,6 +99,30 @@
 				BBDDD3DF2D5F8D940063EDAF /* Release.xcconfig */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		BBDDD3E62D5F93790063EDAF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BBBDE8FE2D5E896400CDCE10 /* BooksApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		BBDDD3E72D5F938B0063EDAF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BBBDE9022D5E896700CDCE10 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BBDDD3E82D5F93E60063EDAF /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				BBDDD3E92D5F93F40063EDAF /* Localizable.xcstrings */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBDDD3EA2D5F93F50063EDAF /* Localizable.xcstrings in Resources */,
 				BBBDE9032D5E896700CDCE10 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
