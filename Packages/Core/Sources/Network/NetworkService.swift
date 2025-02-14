@@ -9,13 +9,15 @@ import Combine
 import Configuration
 import Foundation
 
-protocol NetworkServiceProtocol {
+public protocol NetworkServiceProtocol {
     func performRequest<T: Decodable>(with builder: ApiRequestBuilder, decodingType: T.Type) -> Future<T, Error>
 }
 
-final class NetworkManager: NetworkServiceProtocol {
+public final class NetworkService: NetworkServiceProtocol {
     
-    func performRequest<T: Decodable>(
+    public init() { }
+    
+    public func performRequest<T: Decodable>(
         with builder: ApiRequestBuilder,
         decodingType: T.Type
     ) -> Future<T, Error> {

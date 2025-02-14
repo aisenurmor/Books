@@ -1,2 +1,8 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+//
+//  File.swift
+//  
+//
+//  Created by Aise Nur Mor on 14.02.2025.
+//
+
+@_exported import Home

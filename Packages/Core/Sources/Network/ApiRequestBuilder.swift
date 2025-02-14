@@ -5,7 +5,7 @@
 //  Created by Aise Nur Mor on 14.02.2025.
 //
 
-final class ApiRequestBuilder {
+public final class ApiRequestBuilder {
 
     var httpMethod: HTTPMethod
     var endpoint: Endpoint
@@ -13,7 +13,7 @@ final class ApiRequestBuilder {
     var headers: [String: String]?
     var payload: [String: Any]?
 
-    init(endpoint: Endpoint, httpMethod: HTTPMethod) {
+    public init(endpoint: Endpoint, httpMethod: HTTPMethod) {
         self.endpoint = endpoint
         self.httpMethod = httpMethod
     }

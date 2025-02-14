@@ -9,13 +9,29 @@ let package = Package(
     products: [
         .library(
             name: "Feature",
-            targets: ["Feature"]),
+            targets: ["Feature"]
+        ),
+    ],
+    dependencies: [
+        .package(path: "../Core")
     ],
     targets: [
         .target(
-            name: "Feature"),
+            name: "Feature",
+            dependencies: [
+                "Home"
+            ]
+        ),
+        .target(
+            name: "Home",
+            dependencies: [
+                .product(name: "Model", package: "Core"),
+                .product(name: "Network", package: "Core")
+            ]
+        ),
         .testTarget(
-            name: "FeatureTests",
-            dependencies: ["Feature"]),
+            name: "Tests",
+            dependencies: []
+        )
     ]
 )

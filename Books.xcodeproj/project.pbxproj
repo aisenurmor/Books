@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB43879D2D5FA0FF0089DD64 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43879C2D5FA0FF0089DD64 /* AppTabView.swift */; };
+		BB4387A82D5FAFBE0089DD64 /* Feature in Frameworks */ = {isa = PBXBuildFile; productRef = BB4387A72D5FAFBE0089DD64 /* Feature */; };
 		BBBDE8FF2D5E896400CDCE10 /* BooksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDE8FE2D5E896400CDCE10 /* BooksApp.swift */; };
-		BBBDE9012D5E896400CDCE10 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDE9002D5E896400CDCE10 /* ContentView.swift */; };
 		BBBDE9032D5E896700CDCE10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBBDE9022D5E896700CDCE10 /* Assets.xcassets */; };
 		BBBDE9102D5E896700CDCE10 /* BooksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDE90F2D5E896700CDCE10 /* BooksTests.swift */; };
 		BBDDD3EA2D5F93F50063EDAF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BBDDD3E92D5F93F40063EDAF /* Localizable.xcstrings */; };
@@ -25,9 +26,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB43879C2D5FA0FF0089DD64 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		BBBDE8FB2D5E896400CDCE10 /* Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Books.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBBDE8FE2D5E896400CDCE10 /* BooksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksApp.swift; sourceTree = "<group>"; };
-		BBBDE9002D5E896400CDCE10 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BBBDE9022D5E896700CDCE10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBBDE90B2D5E896700CDCE10 /* BooksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BooksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBBDE90F2D5E896700CDCE10 /* BooksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksTests.swift; sourceTree = "<group>"; };
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4387A82D5FAFBE0089DD64 /* Feature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,12 +56,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB43879B2D5FA0E90089DD64 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BB43879C2D5FA0FF0089DD64 /* AppTabView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		BB43879E2D5FA57B0089DD64 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BBBDE8F22D5E896400CDCE10 = {
 			isa = PBXGroup;
 			children = (
 				BBBDE8FD2D5E896400CDCE10 /* Books */,
 				BBBDE90E2D5E896700CDCE10 /* BooksTests */,
 				BBBDE8FC2D5E896400CDCE10 /* Products */,
+				BB43879E2D5FA57B0089DD64 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,8 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				BBDDD3E62D5F93790063EDAF /* App */,
+				BB43879B2D5FA0E90089DD64 /* Components */,
 				BBDDD3DD2D5F8D1D0063EDAF /* Config */,
-				BBBDE9002D5E896400CDCE10 /* ContentView.swift */,
 				BBDDD3E72D5F938B0063EDAF /* Resources */,
 				BBDDD3E82D5F93E60063EDAF /* SupportingFiles */,
 			);
@@ -142,6 +160,7 @@
 			);
 			name = Books;
 			packageProductDependencies = (
+				BB4387A72D5FAFBE0089DD64 /* Feature */,
 			);
 			productName = Books;
 			productReference = BBBDE8FB2D5E896400CDCE10 /* Books.app */;
@@ -229,7 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBBDE9012D5E896400CDCE10 /* ContentView.swift in Sources */,
+				BB43879D2D5FA0FF0089DD64 /* AppTabView.swift in Sources */,
 				BBBDE8FF2D5E896400CDCE10 /* BooksApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,6 +532,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BB4387A72D5FAFBE0089DD64 /* Feature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Feature;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BBBDE8F32D5E896400CDCE10 /* Project object */;
 }
