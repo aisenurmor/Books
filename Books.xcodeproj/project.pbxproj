@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BB43879D2D5FA0FF0089DD64 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43879C2D5FA0FF0089DD64 /* AppTabView.swift */; };
 		BB4387A82D5FAFBE0089DD64 /* Feature in Frameworks */ = {isa = PBXBuildFile; productRef = BB4387A72D5FAFBE0089DD64 /* Feature */; };
+		BB4387AB2D5FF4470089DD64 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4387AA2D5FF4470089DD64 /* AppCoordinator.swift */; };
+		BB4387AD2D5FF4B70089DD64 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = BB4387AC2D5FF4B70089DD64 /* Navigation */; };
 		BBBDE8FF2D5E896400CDCE10 /* BooksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDE8FE2D5E896400CDCE10 /* BooksApp.swift */; };
 		BBBDE9032D5E896700CDCE10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBBDE9022D5E896700CDCE10 /* Assets.xcassets */; };
 		BBBDE9102D5E896700CDCE10 /* BooksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBDE90F2D5E896700CDCE10 /* BooksTests.swift */; };
@@ -27,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		BB43879C2D5FA0FF0089DD64 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
+		BB4387AA2D5FF4470089DD64 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		BBBDE8FB2D5E896400CDCE10 /* Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Books.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBBDE8FE2D5E896400CDCE10 /* BooksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksApp.swift; sourceTree = "<group>"; };
 		BBBDE9022D5E896700CDCE10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -42,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4387AD2D5FF4B70089DD64 /* Navigation in Frameworks */,
 				BB4387A82D5FAFBE0089DD64 /* Feature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +75,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BB4387A92D5FF42E0089DD64 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				BB4387AA2D5FF4470089DD64 /* AppCoordinator.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		BBBDE8F22D5E896400CDCE10 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +108,7 @@
 				BBDDD3E62D5F93790063EDAF /* App */,
 				BB43879B2D5FA0E90089DD64 /* Components */,
 				BBDDD3DD2D5F8D1D0063EDAF /* Config */,
+				BB4387A92D5FF42E0089DD64 /* Navigation */,
 				BBDDD3E72D5F938B0063EDAF /* Resources */,
 				BBDDD3E82D5F93E60063EDAF /* SupportingFiles */,
 			);
@@ -161,6 +174,7 @@
 			name = Books;
 			packageProductDependencies = (
 				BB4387A72D5FAFBE0089DD64 /* Feature */,
+				BB4387AC2D5FF4B70089DD64 /* Navigation */,
 			);
 			productName = Books;
 			productReference = BBBDE8FB2D5E896400CDCE10 /* Books.app */;
@@ -248,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4387AB2D5FF4470089DD64 /* AppCoordinator.swift in Sources */,
 				BB43879D2D5FA0FF0089DD64 /* AppTabView.swift in Sources */,
 				BBBDE8FF2D5E896400CDCE10 /* BooksApp.swift in Sources */,
 			);
@@ -537,6 +552,10 @@
 		BB4387A72D5FAFBE0089DD64 /* Feature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Feature;
+		};
+		BB4387AC2D5FF4B70089DD64 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

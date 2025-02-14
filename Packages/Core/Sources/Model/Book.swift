@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Book: Decodable {
+public struct Book: Codable {
     
     public let id: String
     public let name: String

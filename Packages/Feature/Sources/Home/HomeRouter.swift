@@ -6,14 +6,21 @@
 //
 
 import Model
+import Navigation
 
 final class HomeRouter: HomeRouterProtocol {
     
-    func navigateToDetail(for book: Book) {
-        // TODO: Add action
+    private weak var coordinator: (any CoordinatorProtocol)?
+    
+    public init(coordinator: (any CoordinatorProtocol)?) {
+        self.coordinator = coordinator
     }
     
-    func navigateToSearch() {
-        // TODO: Add action
+    public func navigateToDetail(for book: Book) {
+        coordinator?.push(.detail(book: book))
+    }
+    
+    public func navigateToSearch() {
+        coordinator?.push(.search)
     }
 }
