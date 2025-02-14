@@ -7,18 +7,19 @@
 
 import Foundation
 
-struct Book: Decodable {
-    let id: String
-    let name: String
-    let artistName: String
-    let releaseDate: String
-    let kind: Kind
-    let artistId: String
-    let artistURL: String
-    let imageURL: String
-    let genres: [Genre]
-    let url: String
-    let contentAdvisoryRating: String?
+public struct Book: Decodable {
+    
+    public let id: String
+    public let name: String
+    public let artistName: String
+    public let releaseDate: String
+    public let kind: Kind
+    public let artistId: String
+    public let artistURL: String
+    public let imageURL: String
+    public let genres: [Genre]
+    public let url: String
+    public let contentAdvisoryRating: String?
     
     enum CodingKeys: String, CodingKey {
         case artistName, id, name, releaseDate, kind
@@ -30,10 +31,10 @@ struct Book: Decodable {
 }
 
 // MARK: - Genre
-struct Genre: Codable {
-    let genreId: String
-    let name: String
-    let url: String
+public struct Genre: Codable {
+    public let genreId: String
+    public let name: String
+    public let url: String
 
     enum CodingKeys: String, CodingKey {
         case genreId = "genreID"
@@ -42,6 +43,6 @@ struct Genre: Codable {
 }
 
 // MARK: - Kind
-enum Kind: String, Codable {
+public enum Kind: String, Codable {
     case books = "books"
 }

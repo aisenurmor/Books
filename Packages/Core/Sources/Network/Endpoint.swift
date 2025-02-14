@@ -5,14 +5,14 @@
 //  Created by Aise Nur Mor on 14.02.2025.
 //
 
-enum HTTPMethod:String {
+public enum HTTPMethod:String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"
     case delete = "DELETE"
 }
 
-enum Endpoint {
+public enum Endpoint {
     case feed(count: Int)
     
     var path: String {

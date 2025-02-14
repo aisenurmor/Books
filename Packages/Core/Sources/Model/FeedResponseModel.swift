@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct FeedResponseModel: Decodable {
-    let feed: Feed
+public struct FeedResponseModel: Decodable {
+    public let feed: Feed
 }
 
 // MARK: - Feed
-struct Feed: Decodable {
-    let title: String
-    let results: [Book]
+public struct Feed: Decodable {
+    
+    public let title: String
+    public let results: [Book]
 }
