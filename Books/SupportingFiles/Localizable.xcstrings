@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Detail" : {
+
+    },
     "Favorites" : {
 
     },
@@ -8,6 +11,9 @@
 
     },
     "Screen 2" : {
+
+    },
+    "Search" : {
 
     }
   },

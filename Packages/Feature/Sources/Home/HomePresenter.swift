@@ -19,8 +19,8 @@ final class HomePresenter: ObservableObject {
     private let router: HomeRouterProtocol
     
     init(
-        interactor: HomeInteractorProtocol = HomeInteractor(),
-        router: HomeRouterProtocol = HomeRouter()
+        interactor: HomeInteractorProtocol,
+        router: HomeRouterProtocol
     ) {
         self.interactor = interactor
         self.router = router
@@ -31,6 +31,10 @@ extension HomePresenter: HomePresenterProtocol {
     
     func viewDidLoad() {
         // TODO: Add action
+    }
+    
+    func didTapBook(_ book: Book) {
+        router.navigateToDetail(for: book)
     }
     
     func toggleFavorite(for book: Book) {

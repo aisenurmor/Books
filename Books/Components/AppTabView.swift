@@ -6,16 +6,17 @@
 //
 
 import Feature
+import Navigation
 import SwiftUI
 
 struct AppTabView: View {
     
-    @State private var navigationPath = NavigationPath()
+    @StateObject private var coordinator = AppCoordinator()
     
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack(path: $coordinator.path) {
             TabView {
-                HomeBuilder.build()
+                HomeBuilder.build(with: coordinator)
                     .tabItem {
                         Label("Home", systemImage: "house.fill")
                     }
@@ -23,6 +24,9 @@ struct AppTabView: View {
                     .tabItem {
                         Label("Favorites", systemImage: "star.fill")
                     }
+            }
+            .navigationDestination(for: NavigationDestination.self) { screen in
+                coordinator.build(screen)
             }
         }
     }

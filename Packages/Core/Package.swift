@@ -14,6 +14,10 @@ let package = Package(
             name: "Model",
             targets: ["Model"]),
         .library(
+            name: "Navigation",
+            targets: ["Navigation"]
+        ),
+        .library(
             name: "Network",
             targets: ["Network"]),
     ],
@@ -25,6 +29,9 @@ let package = Package(
         .target(
             name: "Model",
             dependencies: []
+        ),
+        .target(
+            name: "Navigation"
         ),
         .target(
             name: "Network",
