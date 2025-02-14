@@ -5,8 +5,9 @@
 //  Created by Aise Nur Mor on 14.02.2025.
 //
 
-import Foundation
 import Combine
+import Configuration
+import Foundation
 
 protocol NetworkServiceProtocol {
     func performRequest<T: Decodable>(with builder: ApiRequestBuilder, decodingType: T.Type) -> Future<T, Error>
@@ -14,16 +15,12 @@ protocol NetworkServiceProtocol {
 
 final class NetworkManager: NetworkServiceProtocol {
     
-    static let shared = NetworkManager()
-    
-    private init() {}
-    
     func performRequest<T: Decodable>(
         with builder: ApiRequestBuilder,
         decodingType: T.Type
     ) -> Future<T, Error> {
         return Future { promise in
-            var urlString = API.baseURL + builder.endpoint.path
+            var urlString = Environment.baseURL + builder.endpoint.path
             
             if let urlParams = builder.urlParams {
                 let queryItems = urlParams.map { URLQueryItem(name: $0.key, value: $0.value) }

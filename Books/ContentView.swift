@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Network
 
 struct ContentView: View {
     var body: some View {

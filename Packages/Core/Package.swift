@@ -8,6 +8,9 @@ let package = Package(
     platforms: [.iOS(.v17)],
     products: [
         .library(
+            name: "Configuration",
+            targets: ["Configuration"]),
+        .library(
             name: "Model",
             targets: ["Model"]),
         .library(
@@ -16,12 +19,16 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "Configuration",
+            dependencies: []
+        ),
+        .target(
             name: "Model",
             dependencies: []
         ),
         .target(
             name: "Network",
-            dependencies: []
+            dependencies: ["Configuration"]
         )
     ]
 )
