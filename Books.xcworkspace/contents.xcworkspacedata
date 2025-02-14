@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:Packages"
+      name = "Packages">
+      <FileRef
+         location = "group:Core">
+      </FileRef>
+      <FileRef
+         location = "group:Domain">
+      </FileRef>
+      <FileRef
+         location = "group:/Users/aisenurmor/Books/Packages/Feature">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "container:Books.xcodeproj">
+   </FileRef>
+</Workspace>
