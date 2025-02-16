@@ -23,7 +23,7 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(presenter.paginatedBooks, id: \.id) { book in
+                    ForEach(presenter.books, id: \.id) { book in
                         BookGridItemView(
                             display: .init(book),
                             onFavoriteTapped: {
@@ -36,6 +36,9 @@ struct HomeView: View {
                 }
                 .padding()
                 
+                if presenter.isLoading {
+                    ProgressView()
+                }
             }
             .navigationTitle("booksTitle".localized)
             .toolbar {
@@ -56,7 +59,7 @@ struct HomeView: View {
             }
             .confirmationDialog("sortBooksTitle".localized, isPresented: $showingSortOptions) {
                 ForEach(SortOption.allCases, id: \.self) { option in
-                    Button(option.title) { [weak presenter] in
+                    Button(option.title.localized) { [weak presenter] in
                         presenter?.sort(by: option)
                     }
                 }

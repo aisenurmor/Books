@@ -26,9 +26,9 @@ final class HomeInteractor: HomeInteractorProtocol {
         self.networkService = networkService
     }
     
-    func fetchBooks() async throws -> [Book] {
+    func fetchBooks(_ itemCount: Int) async throws -> [Book] {
         return try await withCheckedThrowingContinuation { continuation in
-            networkService.fetchFeed(100)
+            networkService.fetchFeed(itemCount)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
@@ -37,7 +37,8 @@ final class HomeInteractor: HomeInteractorProtocol {
                     case .failure(let error):
                         continuation.resume(throwing: error)
                     }
-                } receiveValue: { response in
+                } receiveValue: { [weak self] response in
+                    self?.entity.setBooks(response.feed.results)
                     continuation.resume(returning: response.feed.results)
                 }
                 .store(in: &cancellables)
@@ -48,17 +49,17 @@ final class HomeInteractor: HomeInteractorProtocol {
         // TODO: Add action
     }
     
-    func sortBooks(books: [Book], by option: SortOption) -> [Book] {
+    func sortBooks(by option: SortOption) -> [Book] {
         switch option {
         case .all:
-            return books
+            return entity.books
         case .newestToOldest:
-            return books.sorted { $0.releaseDate > $1.releaseDate }
+            return entity.books.sorted { $0.releaseDate > $1.releaseDate }
         case .oldestToNewest:
-            return books.sorted { $0.releaseDate < $1.releaseDate }
+            return entity.books.sorted { $0.releaseDate < $1.releaseDate }
         case .onlyLiked:
             // TODO: Add action
-            return books
+            return entity.books
         }
     }
 }

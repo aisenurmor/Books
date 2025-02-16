@@ -5,6 +5,7 @@
 //  Created by Aise Nur Mor on 14.02.2025.
 //
 
+import Model
 import Foundation
 
 enum SortOption: CaseIterable {
@@ -27,4 +28,11 @@ enum SortOption: CaseIterable {
     }
 }
 
-final class HomeEntity: HomeEntityProtocol { }
+final class HomeEntity: HomeEntityProtocol {
+    
+    private(set) var books: [Book] = []
+    
+    func setBooks(_ books: [Book]) {
+        self.books = books
+    }
+}

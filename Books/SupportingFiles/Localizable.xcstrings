@@ -18,8 +18,16 @@
     "Favorites" : {
 
     },
-    "Home" : {
-
+    "homeTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
     },
     "Screen 2" : {
 
@@ -34,6 +42,50 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sort Books"
+          }
+        }
+      }
+    },
+    "sortOptionAll" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        }
+      }
+    },
+    "sortOptionNewestToOldest" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Newest to Oldest"
+          }
+        }
+      }
+    },
+    "sortOptionOldestToNewest" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Oldest to Newest"
+          }
+        }
+      }
+    },
+    "sortOptionOnlyLiked" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Favorites"
           }
         }
       }

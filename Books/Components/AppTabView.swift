@@ -18,7 +18,7 @@ struct AppTabView: View {
             TabView {
                 HomeBuilder.build(with: coordinator)
                     .tabItem {
-                        Label("Home", systemImage: "house.fill")
+                        Label("homeTitle", systemImage: "house.fill")
                     }
                 Text("Screen 2")
                     .tabItem {
