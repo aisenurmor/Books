@@ -6,4 +6,4 @@
 //
 
 @_exported import Home
-@_exported import Service
+@_exported import NetworkService

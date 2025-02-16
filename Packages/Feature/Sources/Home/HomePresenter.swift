@@ -9,21 +9,17 @@ import Combine
 import Foundation
 import Model
 
+@MainActor
 final class HomePresenter: ObservableObject {
     
     @Published private(set) var books: [Book] = []
+    @Published private(set) var selectedSortOption: SortOption = .all
     @Published private(set) var isLoading: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     
     private let pageSize = 20
-    private var currentPage = 1 {
-        willSet {
-            if newValue >= 1 {
-                self.currentPage = newValue
-            }
-        }
-    }
+    private var currentPage = 1
     
     private let interactor: HomeInteractorProtocol
     private let router: HomeRouterProtocol
@@ -34,10 +30,15 @@ final class HomePresenter: ObservableObject {
     ) {
         self.interactor = interactor
         self.router = router
+        
+        setupBindings()
     }
     
-    func loadMoreIfLastItem(_ id: String) {
-        guard let lastItemId = books.last?.id, lastItemId == id else {
+    func loadMoreIfNeeded(for book: Book) {
+        guard let lastBook = books.last,
+              lastBook.id == book.id,
+              !isLoading,
+              selectedSortOption == .all else {
             return
         }
         loadMoreBooks()
@@ -51,43 +52,80 @@ final class HomePresenter: ObservableObject {
 extension HomePresenter: HomePresenterProtocol {
     
     func viewDidLoad() {
+        guard books.isEmpty else { return }
         refreshBooks()
     }
     
-    func toggleFavorite(for book: Book) {
-        // TODO: Add action
+    func toggleFavorite(for id: String) {
+        Task {
+            try await interactor.toggleFavorite(for: id)
+        }
     }
     
     func sort(by option: SortOption) {
-        books = interactor.sortBooks(by: option)
+        guard selectedSortOption != option else { return }
+        selectedSortOption = option
+        
+        Task {
+            let sortedBooks = try await interactor.sortBooks(by: option)
+            self.books = sortedBooks
+        }
     }
 }
 
 private extension HomePresenter {
     
-    func loadMoreBooks() {
-        guard !isLoading else { return }
-        currentPage += 1
-        refreshBooks(currentPage*pageSize)
+    func setupBindings() {
+        Task {
+            await setupFavoritesObservation()
+        }
     }
     
-    func refreshBooks(_ itemCount: Int = 20) {
-        isLoading = true
+    func setupFavoritesObservation() async {
+        await interactor.observeFavorites()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] ids in
+                self?.books = ids
+                self?.updateBooksIfNeeded()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func loadMoreBooks() {
+        let nextPage = currentPage + 1
+        let itemCount = nextPage * pageSize
         
         Task {
-            do {
-                let response = try await interactor.fetchBooks(itemCount)
-                
-                await MainActor.run {
-                    self.books = response
-                    self.isLoading = false
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                    self.currentPage -= 1
-                }
-            }
+            await fetchBooks(itemCount)
+        }
+    }
+    
+    func refreshBooks() {
+        Task {
+            await fetchBooks(pageSize)
+        }
+    }
+    
+    func fetchBooks(_ itemCount: Int) async {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        do {
+            books = try await interactor.fetchBooks(itemCount)
+            currentPage = itemCount / pageSize
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
+        
+        isLoading = false
+    }
+    
+    func updateBooksIfNeeded() {
+        guard selectedSortOption == .onlyLiked else { return }
+        
+        Task {
+            let sortedBooks = try await interactor.sortBooks(by: .onlyLiked)
+            self.books = sortedBooks
         }
     }
 }

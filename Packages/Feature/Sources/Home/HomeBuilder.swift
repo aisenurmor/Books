@@ -6,7 +6,8 @@
 //
 
 import Navigation
-import Service
+import NetworkService
+import Repository
 import SwiftUI
 
 public enum HomeBuilder {
@@ -17,6 +18,7 @@ public enum HomeBuilder {
         let networkService = HomeServiceLive()
         let interactor = HomeInteractor(
             entity: entity,
+            repository: BooksRepository.shared,
             networkService: networkService
         )
         let router = HomeRouter(coordinator: coordinator)

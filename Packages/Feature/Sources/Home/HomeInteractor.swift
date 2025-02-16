@@ -8,21 +8,24 @@
 import Combine
 import Foundation
 import Model
-import Network
-import Service
+import NetworkService
+import Repository
 
 final class HomeInteractor: HomeInteractorProtocol {
     
     private var cancellables = Set<AnyCancellable>()
     
     private let entity: HomeEntityProtocol
+    private let repository: BooksRepositoryProtocol
     private let networkService: HomeServiceProtocol
     
     init(
         entity: HomeEntityProtocol = HomeEntity(),
+        repository: BooksRepositoryProtocol = BooksRepository(),
         networkService: HomeServiceProtocol = HomeServiceLive()
     ) {
         self.entity = entity
+        self.repository = repository
         self.networkService = networkService
     }
     
@@ -38,28 +41,33 @@ final class HomeInteractor: HomeInteractorProtocol {
                         continuation.resume(throwing: error)
                     }
                 } receiveValue: { [weak self] response in
-                    self?.entity.setBooks(response.feed.results)
-                    continuation.resume(returning: response.feed.results)
+                    guard let self else { return }
+                    Task {
+                        do {
+                            let books = try await self.repository.create(books: response.feed.results)
+                            continuation.resume(returning: books)
+                        } catch {
+                            continuation.resume(throwing: error)
+                        }
+                    }
                 }
                 .store(in: &cancellables)
         }
     }
     
-    func toggleFavorite(for book: Book) async throws {
-        // TODO: Add action
+    func toggleFavorite(for id: String) async throws {
+        try await repository.toggleFavorite(for: id)
     }
     
-    func sortBooks(by option: SortOption) -> [Book] {
-        switch option {
-        case .all:
-            return entity.books
-        case .newestToOldest:
-            return entity.books.sorted { $0.releaseDate > $1.releaseDate }
-        case .oldestToNewest:
-            return entity.books.sorted { $0.releaseDate < $1.releaseDate }
-        case .onlyLiked:
-            // TODO: Add action
-            return entity.books
-        }
+    func sortBooks(by option: SortOption) async throws -> [Book] {
+        return try await repository.sortBooks(by: option)
+    }
+    
+    func getFavoriteIds() async throws -> Set<String> {
+        try await repository.getFavorites()
+    }
+    
+    func observeFavorites() async -> AnyPublisher<[Book], Never> {
+        repository.booksPublisher
     }
 }

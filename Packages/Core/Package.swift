@@ -27,6 +27,14 @@ let package = Package(
             name: "Network",
             targets: ["Network"]
         ),
+        .library(
+            name: "Repository",
+            targets: ["Repository"]
+        ),
+        .library(
+            name: "Storage",
+            targets: ["Storage"]
+        ),
     ],
     targets: [
         .target(
@@ -36,7 +44,8 @@ let package = Package(
             name: "Helper"
         ),
         .target(
-            name: "Model"
+            name: "Model",
+            dependencies: ["Helper"]
         ),
         .target(
             name: "Navigation",
@@ -45,6 +54,16 @@ let package = Package(
         .target(
             name: "Network",
             dependencies: ["Configuration"]
+        ),
+        .target(
+            name: "Repository",
+            dependencies: [
+                "Storage",
+                "Model",
+            ]
+        ),
+        .target(
+            name: "Storage"
         )
     ]
 )

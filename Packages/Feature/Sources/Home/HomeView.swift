@@ -6,6 +6,7 @@
 //
 
 import Helper
+import Model
 import SwiftUI
 
 struct HomeView: View {
@@ -26,11 +27,12 @@ struct HomeView: View {
                     ForEach(presenter.books, id: \.id) { book in
                         BookGridItemView(
                             display: .init(book),
-                            onFavoriteTapped: {
-                            // TODO: Add action
+                            isFavorite: book.isFavorite,
+                            onFavoriteTapped: { [weak presenter] in
+                                presenter?.toggleFavorite(for: book.id)
                         })
                         .onAppear { [weak presenter] in
-                            presenter?.loadMoreIfLastItem(book.id)
+                            presenter?.loadMoreIfNeeded(for: book)
                         }
                     }
                 }
