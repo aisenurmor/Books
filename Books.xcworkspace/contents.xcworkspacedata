@@ -8,7 +8,7 @@
          location = "group:Core">
       </FileRef>
       <FileRef
-         location = "group:/Users/aisenurmor/Books/Packages/Feature">
+         location = "group:Feature">
       </FileRef>
    </Group>
    <FileRef
