@@ -10,7 +10,7 @@ import Helper
 
 public struct BookResponseModel: Codable {
     
-    let id: String
+    public let id: String
     let name: String
     let artistName: String
     let releaseDate: String
