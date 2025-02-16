@@ -16,7 +16,7 @@ protocol HomeViewProtocol: AnyObject {
 // MARK: - Presenter Protocol
 protocol HomePresenterProtocol: ObservableObject {
     
-    var paginatedBooks: [Book] { get }
+    var books: [Book] { get }
     
     func viewDidLoad()
     func toggleFavorite(for book: Book)
@@ -24,9 +24,9 @@ protocol HomePresenterProtocol: ObservableObject {
 
 // MARK: - Interactor Protocol
 protocol HomeInteractorProtocol {
-    func fetchBooks() async throws -> [Book]
+    func fetchBooks(_ itemCount: Int) async throws -> [Book]
     func toggleFavorite(for book: Book) async throws
-    func sortBooks(books: [Book], by option: SortOption) -> [Book]
+    func sortBooks(by option: SortOption) -> [Book]
 }
 
 // MARK: - Router Protocol
@@ -36,4 +36,8 @@ protocol HomeRouterProtocol {
 }
 
 // MARK: - Entity Protocol
-protocol HomeEntityProtocol { }
+protocol HomeEntityProtocol {
+    var books: [Book] { get }
+    
+    func setBooks(_ books: [Book])
+}

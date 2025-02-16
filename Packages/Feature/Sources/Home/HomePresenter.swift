@@ -11,14 +11,19 @@ import Model
 
 final class HomePresenter: ObservableObject {
     
-    @Published private(set) var paginatedBooks: [Book] = []
+    @Published private(set) var books: [Book] = []
     @Published private(set) var isLoading: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     
-    private var allBooks: [Book] = []
     private let pageSize = 20
-    private var currentPage = 0
+    private var currentPage = 1 {
+        willSet {
+            if newValue >= 1 {
+                self.currentPage = newValue
+            }
+        }
+    }
     
     private let interactor: HomeInteractorProtocol
     private let router: HomeRouterProtocol
@@ -32,7 +37,7 @@ final class HomePresenter: ObservableObject {
     }
     
     func loadMoreIfLastItem(_ id: String) {
-        guard let lastItemId = paginatedBooks.last?.id, lastItemId == id else {
+        guard let lastItemId = books.last?.id, lastItemId == id else {
             return
         }
         loadMoreBooks()
@@ -54,10 +59,7 @@ extension HomePresenter: HomePresenterProtocol {
     }
     
     func sort(by option: SortOption) {
-        reset()
-        allBooks = interactor.sortBooks(books: allBooks, by: option)
-        loadMoreBooks()
-        isLoading = false
+        books = interactor.sortBooks(by: option)
     }
 }
 
@@ -65,33 +67,27 @@ private extension HomePresenter {
     
     func loadMoreBooks() {
         guard !isLoading else { return }
-        
-        let startIndex = currentPage * pageSize
-        let endIndex = min(startIndex + pageSize, allBooks.count)
-        let nextBatch = Array(allBooks[startIndex..<endIndex])
-        
-        paginatedBooks.append(contentsOf: nextBatch)
         currentPage += 1
+        refreshBooks(currentPage*pageSize)
     }
     
-    func refreshBooks() {
+    func refreshBooks(_ itemCount: Int = 20) {
+        isLoading = true
+        
         Task {
             do {
-                let response = try await interactor.fetchBooks()
+                let response = try await interactor.fetchBooks(itemCount)
                 
                 await MainActor.run {
-                    self.allBooks = response
-                    self.loadMoreBooks()
+                    self.books = response
                     self.isLoading = false
                 }
             } catch {
-                debugPrint("Error fetching books: \(error)")
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.currentPage -= 1
+                }
             }
         }
-    }
-    
-    func reset() {
-        currentPage = 0
-        paginatedBooks = []
     }
 }
