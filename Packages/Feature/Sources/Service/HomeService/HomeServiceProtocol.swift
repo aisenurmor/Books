@@ -8,6 +8,6 @@
 import Combine
 import Model
 
-protocol HomeServiceProtocol {
+public protocol HomeServiceProtocol {
     func fetchFeed(_ count: Int) -> AnyPublisher<FeedResponseModel, Error>
 }

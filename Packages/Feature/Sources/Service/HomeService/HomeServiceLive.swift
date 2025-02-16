@@ -9,15 +9,15 @@ import Combine
 import Model
 import Network
 
-struct HomeServiceLive: HomeServiceProtocol {
+public struct HomeServiceLive: HomeServiceProtocol {
     
     private let networkService: NetworkServiceProtocol
     
-    init(networkService: NetworkServiceProtocol = NetworkService()) {
+    public init(networkService: NetworkServiceProtocol = NetworkService()) {
         self.networkService = networkService
     }
     
-    func fetchFeed(_ count: Int) -> AnyPublisher<FeedResponseModel, Error> {
+    public func fetchFeed(_ count: Int) -> AnyPublisher<FeedResponseModel, Error> {
         let requestBuilder = ApiRequestBuilder(endpoint: .feed(count: count), httpMethod: .get)
 
         return networkService.performRequest(with: requestBuilder, decodingType: FeedResponseModel.self)

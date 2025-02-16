@@ -9,29 +9,38 @@ let package = Package(
     products: [
         .library(
             name: "Configuration",
-            targets: ["Configuration"]),
+            targets: ["Configuration"]
+        ),
+        .library(
+            name: "Helper",
+            targets: ["Helper"]
+        ),
         .library(
             name: "Model",
-            targets: ["Model"]),
+            targets: ["Model"]
+        ),
         .library(
             name: "Navigation",
             targets: ["Navigation"]
         ),
         .library(
             name: "Network",
-            targets: ["Network"]),
+            targets: ["Network"]
+        ),
     ],
     targets: [
         .target(
-            name: "Configuration",
-            dependencies: []
+            name: "Configuration"
         ),
         .target(
-            name: "Model",
-            dependencies: []
+            name: "Helper"
         ),
         .target(
-            name: "Navigation"
+            name: "Model"
+        ),
+        .target(
+            name: "Navigation",
+            dependencies: ["Model"]
         ),
         .target(
             name: "Network",
