@@ -6,10 +6,12 @@
 //
 
 import Navigation
+import Service
 import SwiftUI
 
 public enum HomeBuilder {
     
+    @MainActor 
     public static func build(with coordinator: any CoordinatorProtocol) -> some View {
         let entity: HomeEntityProtocol = HomeEntity()
         let networkService = HomeServiceLive()

@@ -15,8 +15,8 @@ public struct Book: Codable {
     public let releaseDate: String
     public let kind: Kind
     public let artistId: String
-    public let artistURL: String
-    public let imageURL: String
+    public let artistUrl: String
+    public let imageUrl: String
     public let genres: [Genre]
     public let url: String
     public let contentAdvisoryRating: String?
@@ -24,22 +24,18 @@ public struct Book: Codable {
     enum CodingKeys: String, CodingKey {
         case artistName, id, name, releaseDate, kind
         case artistId = "artistId"
-        case artistURL
-        case imageURL = "artworkUrl100"
+        case artistUrl
+        case imageUrl = "artworkUrl100"
         case genres, url, contentAdvisoryRating
     }
 }
 
 // MARK: - Genre
 public struct Genre: Codable {
+    
     public let genreId: String
     public let name: String
     public let url: String
-
-    enum CodingKeys: String, CodingKey {
-        case genreId = "genreID"
-        case name, url
-    }
 }
 
 // MARK: - Kind
