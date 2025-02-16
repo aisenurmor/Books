@@ -15,29 +15,18 @@ public final actor BooksRepository: BooksRepositoryProtocol {
     public static let shared = BooksRepository()
     
     private let booksSubject = CurrentValueSubject<[Book], Never>([])
-    private let storageService: FavoritesStorage
+    private let storageService: FavoritesStorageProtocol
     
-    public init(storageService: FavoritesStorage = FavoritesStorage()) {
+    public init(storageService: FavoritesStorageProtocol = FavoritesStorage()) {
         self.storageService = storageService
     }
     
-    public func create(books: [BookResponseModel]) async throws  -> [Book] {
+    public func create(books: [BookResponseModel]) async throws -> [Book] {
         let favorites = try await getFavorites()
         
-        booksSubject.value = books.map { result in
-            let book = result.toBook()
-            return Book(
-                id: book.id,
-                title: book.title,
-                author: book.author,
-                imageUrl: book.imageUrl,
-                publishDate: book.publishDate,
-                isFavorite: favorites.contains(book.id),
-                category: book.category
-            )
-        }
-        
-        return booksSubject.value
+        let books = books.map { $0.toBook(isFavorite: favorites.contains($0.id)) }
+        booksSubject.send(books)
+        return books
     }
     
     public func toggleFavorite(for bookId: String) async throws {
@@ -48,23 +37,8 @@ public final actor BooksRepository: BooksRepositoryProtocol {
         } else {
             favorites.insert(bookId)
         }
-        
         storageService.saveFavorites(favorites)
-        
-        booksSubject.value = booksSubject.value.map { book in
-            if book.id == bookId {
-                return Book(
-                    id: book.id,
-                    title: book.title,
-                    author: book.author,
-                    imageUrl: book.imageUrl,
-                    publishDate: book.publishDate,
-                    isFavorite: favorites.contains(book.id),
-                    category: book.category
-                )
-            }
-            return book
-        }
+        update(with: bookId, isFavorite: favorites.contains(bookId))
     }
     
     public nonisolated var booksPublisher: AnyPublisher<[Book], Never> {
@@ -75,16 +49,29 @@ public final actor BooksRepository: BooksRepositoryProtocol {
         try await storageService.getFavorites()
     }
     
-    public func sortBooks(by option: SortOption) async throws -> [Book] {
+    public func sortBooks(by option: SortOption) -> [Book] {
+        let books = booksSubject.value
+        
         switch option {
         case .all:
-            return booksSubject.value
+            return books
         case .newestToOldest:
-            return booksSubject.value.sorted { $0.publishDate > $1.publishDate }
+            return books.sorted(by: { $0.publishDate > $1.publishDate })
         case .oldestToNewest:
-            return booksSubject.value.sorted { $0.publishDate < $1.publishDate }
+            return books.sorted(by: { $0.publishDate < $1.publishDate })
         case .onlyLiked:
-            return booksSubject.value.filter { $0.isFavorite }
+            return books.filter { $0.isFavorite }
         }
+    }
+}
+
+// MARK: - Private Methods
+private extension BooksRepository {
+    
+    private func update(with bookId: String, isFavorite: Bool) {
+        guard let index = booksSubject.value.firstIndex(where: { $0.id == bookId }) else { return }
+        var updatedBooks = booksSubject.value
+        updatedBooks[index].isFavorite = isFavorite
+        booksSubject.send(updatedBooks)
     }
 }

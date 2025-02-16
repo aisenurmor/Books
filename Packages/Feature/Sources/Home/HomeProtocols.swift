@@ -20,16 +20,18 @@ protocol HomePresenterProtocol: ObservableObject {
     var books: [Book] { get }
     
     func viewDidLoad()
+    func loadMoreIfNeeded(for book: Book)
     func toggleFavorite(for id: String)
+    func navigateToSearch()
 }
 
 // MARK: - Interactor Protocol
 protocol HomeInteractorProtocol {
-    func fetchBooks(_ itemCount: Int) async throws -> [Book]
+    func fetchMoreBooks() async throws -> [Book]
+    func refreshBooks() async throws -> [Book]
     func toggleFavorite(for id: String) async throws
     func sortBooks(by option: SortOption) async throws -> [Book]
     func observeFavorites() async -> AnyPublisher<[Book], Never>
-    func getFavoriteIds() async throws -> Set<String>
 }
 
 // MARK: - Router Protocol

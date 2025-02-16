@@ -7,7 +7,12 @@
 
 import Foundation
 
-public struct FavoritesStorage {
+public protocol FavoritesStorageProtocol {
+    func saveFavorites(_ favorites: Set<String>)
+    func getFavorites() async throws -> Set<String>
+}
+
+public struct FavoritesStorage: FavoritesStorageProtocol {
     
     private let defaults = UserDefaults.standard
     private let favoritesKey = "favoriteBooks"
