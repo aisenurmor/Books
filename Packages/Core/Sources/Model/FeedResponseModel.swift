@@ -15,5 +15,5 @@ public struct FeedResponseModel: Decodable {
 public struct Feed: Decodable {
     
     public let title: String
-    public let results: [Book]
+    public let results: [BookResponseModel]
 }

@@ -1,44 +1,43 @@
 //
-//  Book.swift
+//  File.swift
+//  
 //
-//
-//  Created by Aise Nur Mor on 14.02.2025.
+//  Created by Aise Nur Mor on 16.02.2025.
 //
 
 import Foundation
 
-public struct Book: Codable {
+public struct Book: Identifiable {
     
     public let id: String
-    public let name: String
-    public let artistName: String
-    public let releaseDate: String
-    public let kind: Kind
-    public let artistId: String
-    public let artistUrl: String
+    public let title: String
+    public let author: String
     public let imageUrl: String
-    public let genres: [Genre]
-    public let url: String
-    public let contentAdvisoryRating: String?
+    public let publishDate: Date
+    public var isFavorite: Bool
+    public let category: [BookCategory]
     
-    enum CodingKeys: String, CodingKey {
-        case artistName, id, name, releaseDate, kind
-        case artistId = "artistId"
-        case artistUrl
-        case imageUrl = "artworkUrl100"
-        case genres, url, contentAdvisoryRating
+    public init(
+        id: String,
+        title: String,
+        author: String,
+        imageUrl: String,
+        publishDate: Date,
+        isFavorite: Bool = false,
+        category: [BookCategory]
+    ) {
+        self.id = id
+        self.title = title
+        self.author = author
+        self.imageUrl = imageUrl
+        self.publishDate = publishDate
+        self.isFavorite = isFavorite
+        self.category = category
     }
 }
 
-// MARK: - Genre
-public struct Genre: Codable {
-    
-    public let genreId: String
+// MARK: - BookCategory
+public struct BookCategory: Identifiable {
+    public let id: String
     public let name: String
-    public let url: String
-}
-
-// MARK: - Kind
-public enum Kind: String, Codable {
-    case books = "books"
 }

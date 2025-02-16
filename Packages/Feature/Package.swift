@@ -20,7 +20,7 @@ let package = Package(
             name: "Feature",
             dependencies: [
                 "Home",
-                "Service"
+                "NetworkService"
             ]
         ),
         .target(
@@ -28,14 +28,14 @@ let package = Package(
             dependencies: [
                 .product(name: "Helper", package: "Core"),
                 .product(name: "Model", package: "Core"),
-                .product(name: "Network", package: "Core"),
                 .product(name: "Navigation", package: "Core"),
+                .product(name: "Repository", package: "Core"),
                 
-                "Service"
+                "NetworkService"
             ]
         ),
         .target(
-            name: "Service",
+            name: "NetworkService",
             dependencies: [
                 .product(name: "Model", package: "Core"),
                 .product(name: "Network", package: "Core")

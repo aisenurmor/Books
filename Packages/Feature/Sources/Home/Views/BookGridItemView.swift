@@ -5,7 +5,6 @@
 //  Created by Aise Nur Mor on 15.02.2025.
 //
 
-import Model
 import SwiftUI
 
 struct BookGridItemView: View {
@@ -17,13 +16,16 @@ struct BookGridItemView: View {
     }
     
     private let display: Display
+    private let isFavorite: Bool
     private let onFavoriteTapped: FavoriteAction
     
     init(
         display: Display,
+        isFavorite: Bool,
         onFavoriteTapped: @escaping FavoriteAction
     ) {
         self.display = display
+        self.isFavorite = isFavorite
         self.onFavoriteTapped = onFavoriteTapped
     }
     
@@ -41,19 +43,7 @@ struct BookGridItemView: View {
             .background(.gray)
             .clipped()
             .overlay(alignment: .topTrailing) {
-                Button {
-                    onFavoriteTapped()
-                } label: {
-                    Image(systemName: "star")
-                        .font(.system(size: 12))
-                }
-                .frame(
-                    width: Constants.favoriteButtonHeight,
-                    height: Constants.favoriteButtonHeight
-                )
-                .background(.white)
-                .cornerRadius(Constants.favoriteButtonHeight/2)
-                .padding(8)
+                favoriteButton()
             }
             
             Text(display.title)
@@ -68,36 +58,35 @@ struct BookGridItemView: View {
     }
 }
 
-// MARK: - Display
-extension BookGridItemView {
+// MARK: - Private methods
+private extension BookGridItemView {
     
-    struct Display: Identifiable {
-        var id: String
-        let imageUrl: URL?
-        let title: String
-        
-        init(_ book: Book) {
-            self.init(
-                id: book.id,
-                imageUrl: book.imageUrl,
-                title: book.name
-            )
+    @ViewBuilder
+    func favoriteButton() -> some View {
+        Button {
+            onFavoriteTapped()
+        } label: {
+            Image(systemName: isFavorite ? "star.fill" : "star")
+                .font(.system(size: 12))
+                .foregroundColor(isFavorite ? .yellow : .blue)
         }
-        
-        init(
-            id: String,
-            imageUrl: String,
-            title: String
-        ) {
-            self.id = id
-            self.imageUrl = URL(string: imageUrl)
-            self.title = title
-        }
+        .frame(
+            width: Constants.favoriteButtonHeight,
+            height: Constants.favoriteButtonHeight
+        )
+        .background(.white)
+        .cornerRadius(Constants.favoriteButtonHeight/2)
+        .padding(8)
     }
 }
 
 #Preview {
-    BookGridItemView(display:
-        .init(id: "1", imageUrl: "", title: "Lorem ipsum")
+    BookGridItemView(
+        display: .init(
+            id: "1",
+            imageUrl: "",
+            title: "Lorem ipsum"
+        ), 
+        isFavorite: false
     ) { }
 }

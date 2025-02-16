@@ -5,6 +5,7 @@
 //  Created by Aise Nur Mor on 14.02.2025.
 //
 
+import Combine
 import Model
 import SwiftUI
 
@@ -19,14 +20,16 @@ protocol HomePresenterProtocol: ObservableObject {
     var books: [Book] { get }
     
     func viewDidLoad()
-    func toggleFavorite(for book: Book)
+    func toggleFavorite(for id: String)
 }
 
 // MARK: - Interactor Protocol
 protocol HomeInteractorProtocol {
     func fetchBooks(_ itemCount: Int) async throws -> [Book]
-    func toggleFavorite(for book: Book) async throws
-    func sortBooks(by option: SortOption) -> [Book]
+    func toggleFavorite(for id: String) async throws
+    func sortBooks(by option: SortOption) async throws -> [Book]
+    func observeFavorites() async -> AnyPublisher<[Book], Never>
+    func getFavoriteIds() async throws -> Set<String>
 }
 
 // MARK: - Router Protocol
@@ -36,8 +39,4 @@ protocol HomeRouterProtocol {
 }
 
 // MARK: - Entity Protocol
-protocol HomeEntityProtocol {
-    var books: [Book] { get }
-    
-    func setBooks(_ books: [Book])
-}
+protocol HomeEntityProtocol { }
