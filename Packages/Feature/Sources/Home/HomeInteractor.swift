@@ -55,7 +55,7 @@ final class HomeInteractor: HomeInteractorProtocol {
     }
     
     func observeFavorites() async -> AnyPublisher<[Book], Never> {
-        repository.booksPublisher
+        repository.booksSubject.eraseToAnyPublisher()
     }
 }
 

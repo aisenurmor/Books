@@ -16,9 +16,6 @@ protocol HomeViewProtocol: AnyObject {
 
 // MARK: - Presenter Protocol
 protocol HomePresenterProtocol: ObservableObject {
-    
-    var books: [Book] { get }
-    
     func viewDidLoad()
     func loadMoreIfNeeded(for book: Book)
     func toggleFavorite(for id: String)

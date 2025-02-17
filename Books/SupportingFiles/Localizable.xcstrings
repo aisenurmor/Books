@@ -81,6 +81,17 @@
         }
       }
     },
+    "noMoreBooks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No more books available"
+          }
+        }
+      }
+    },
     "publishedDate" : {
       "extractionState" : "manual",
       "localizations" : {

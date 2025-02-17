@@ -8,11 +8,11 @@
 import Combine
 import Foundation
 import Model
+import UICore
 
-@MainActor
-final class HomePresenter: ObservableObject {
+final class HomePresenter: HomePresenterProtocol {
     
-    @Published private(set) var books: [Book] = []
+    @Published private(set) var viewState: ViewState<HomeState> = .loading
     @Published private(set) var selectedSortOption: SortOption = .all
     @Published private(set) var isLoading: Bool = false
     
@@ -35,20 +35,22 @@ final class HomePresenter: ObservableObject {
 }
 
 // MARK: - HomePresenterProtocol
-extension HomePresenter: HomePresenterProtocol {
+@MainActor
+extension HomePresenter {
     
     func viewDidLoad() {
-        guard books.isEmpty else { return }
+        guard case .loading = viewState else { return }
         refreshBooks()
     }
     
     func loadMoreIfNeeded(for book: Book) {
-        guard isLastItem(book),
-              !isLoading,
+        guard case .loaded(let state) = viewState,
+              isLastItem(book),
+              !state.isPaginationLoading,
+              !state.isEndOfList,
               selectedSortOption == .all
-        else {
-            return
-        }
+        else { return }
+        
         loadMoreBooks()
     }
     
@@ -56,9 +58,8 @@ extension HomePresenter: HomePresenterProtocol {
         Task {
             do {
                 try await interactor.toggleFavorite(for: id)
-                await updateBooksIfNeeded()
             } catch {
-                debugPrint("An error occured when toggle favorite state: \(error.localizedDescription)")
+                updateState(errorMessage: error.localizedDescription)
             }
         }
     }
@@ -69,11 +70,16 @@ extension HomePresenter: HomePresenterProtocol {
         
         Task {
             do {
-                books = try await interactor.sortBooks(by: option)
+                let sortedBooks = try await interactor.sortBooks(by: option)
+                updateState(with: sortedBooks)
             } catch {
-                debugPrint("An error occured when sorting books: \(error.localizedDescription)")
+                updateState(errorMessage: error.localizedDescription)
             }
         }
+    }
+    
+    func retry() {
+        loadMoreBooks()
     }
     
     func navigateToSearch() {
@@ -89,55 +95,85 @@ extension HomePresenter: HomePresenterProtocol {
 private extension HomePresenter {
     
     func setupBindings() async {
-        Task {
-            await interactor.observeFavorites()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] books in
-                    guard let self else { return }
-                    self.books = Array(books)
-                    
-                    Task {
-                        await self.updateBooksIfNeeded()
-                    }
+        await interactor.observeFavorites()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] books in
+                guard let self else { return }
+                Task {
+                    await self.updateBooks(with: books)
                 }
-                .store(in: &cancellables)
-        }
+            }
+            .store(in: &cancellables)
     }
     
     func loadMoreBooks() {
+        guard case .loaded(var state) = viewState else { return }
+        state.isPaginationLoading = true
+        viewState = .loaded(state)
+        
         Task {
-            isLoading = true
             do {
-                books = try await interactor.fetchMoreBooks()
+                let books = try await interactor.fetchMoreBooks()
+                updateState(with: books)
             } catch {
-                debugPrint("An error occured when fetch more books: \(error.localizedDescription)")
+                updateState(errorMessage: error.localizedDescription)
             }
-            isLoading = false
         }
     }
     
     func refreshBooks() {
         Task {
-            isLoading = true
             do {
-                books = try await interactor.refreshBooks()
+                let books = try await interactor.refreshBooks()
+                updateState(with: books)
             } catch {
-                debugPrint("An error occured when refresh books: \(error.localizedDescription)")
+                updateState(errorMessage: error.localizedDescription)
             }
-            isLoading = false
         }
     }
     
-    func updateBooksIfNeeded() async {
-        guard selectedSortOption == .onlyLiked else { return }
+    func updateBooks(with books: [Book]) async {
+        guard selectedSortOption != .all else {
+            updateState(with: books)
+            return
+        }
         do {
-            books = try await interactor.sortBooks(by: .onlyLiked)
+            let books = try await interactor.sortBooks(by: selectedSortOption)
+            updateState(with: books)
         } catch {
-            debugPrint("An error occured when fetch books: \(error.localizedDescription)")
+            updateState(errorMessage: error.localizedDescription)
+        }
+    }
+    
+    func updateState(with books: [Book] = [], errorMessage: String? = nil) {
+        if let errorMessage {
+            DispatchQueue.main.async {
+                self.viewState = .error(message: errorMessage)
+            }
+            return
+        }
+        let state = HomeState(
+            books: books,
+            isPaginationLoading: false,
+            isEndOfList: books.count >= 100
+        )
+        DispatchQueue.main.async {
+            self.viewState = .loaded(state)
         }
     }
     
     func isLastItem(_ book: Book) -> Bool {
-        books.last?.id == book.id
+        guard case .loaded(let state) = viewState else { return false }
+        return state.books.last?.id == book.id
+    }
+}
+
+struct HomeState {
+    var books: [Book]
+    var isPaginationLoading: Bool
+    var isEndOfList: Bool
+    
+    static var empty: HomeState {
+        HomeState(books: [], isPaginationLoading: false, isEndOfList: false)
     }
 }
