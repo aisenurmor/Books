@@ -27,8 +27,6 @@ final class AppCoordinator: CoordinatorProtocol {
         path.removeLast(path.count)
     }
     
-    // MARK: - Presentation Style Providers
-    // TODO: - Make real screens
     @ViewBuilder
     func build(_ destination: NavigationDestination) -> some View {
         switch destination {
@@ -37,7 +35,7 @@ final class AppCoordinator: CoordinatorProtocol {
         case .favorites:
             Text("Favorites")
         case .search:
-            Text("Search")
+            SearchBuilder.build(with: self)
         }
     }
 }

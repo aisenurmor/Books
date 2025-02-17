@@ -20,6 +20,7 @@ let package = Package(
             name: "Feature",
             dependencies: [
                 "Home",
+                "Search",
                 "NetworkService"
             ]
         ),
@@ -32,6 +33,15 @@ let package = Package(
                 .product(name: "Repository", package: "Core"),
                 
                 "NetworkService"
+            ]
+        ),
+        .target(
+            name: "Search",
+            dependencies: [
+                .product(name: "Helper", package: "Core"),
+                .product(name: "Model", package: "Core"),
+                .product(name: "Navigation", package: "Core"),
+                .product(name: "Repository", package: "Core")
             ]
         ),
         .target(

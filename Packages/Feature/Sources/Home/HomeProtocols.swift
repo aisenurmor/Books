@@ -6,8 +6,8 @@
 //
 
 import Combine
+import Foundation
 import Model
-import SwiftUI
 
 // MARK: - View Protocol
 protocol HomeViewProtocol: AnyObject {
