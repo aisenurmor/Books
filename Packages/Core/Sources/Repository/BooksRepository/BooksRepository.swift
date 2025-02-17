@@ -63,6 +63,23 @@ public final actor BooksRepository: BooksRepositoryProtocol {
             return books.filter { $0.isFavorite }
         }
     }
+    
+    public func getCategories() async throws -> [BookCategory] {
+        let allCategories = booksSubject.value.flatMap { $0.category }
+        let uniqueCategories = Array(Set(allCategories))
+        return uniqueCategories
+    }
+    
+    public func searchBooks(query: String, category: BookCategory?) async throws  -> [Book] {
+        guard !query.isEmpty else { return [] }
+        return booksSubject.value.filter { book in
+            if let category {
+                return book.category.contains(category)
+            } else {
+                return book.title.localizedCaseInsensitiveContains(query)
+            }
+        }
+    }
 }
 
 // MARK: - Private Methods

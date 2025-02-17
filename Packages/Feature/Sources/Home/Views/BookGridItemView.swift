@@ -16,16 +16,13 @@ struct BookGridItemView: View {
     }
     
     private let display: Display
-    private let isFavorite: Bool
     private let onFavoriteTapped: FavoriteAction
     
     init(
         display: Display,
-        isFavorite: Bool,
         onFavoriteTapped: @escaping FavoriteAction
     ) {
         self.display = display
-        self.isFavorite = isFavorite
         self.onFavoriteTapped = onFavoriteTapped
     }
     
@@ -66,9 +63,9 @@ private extension BookGridItemView {
         Button {
             onFavoriteTapped()
         } label: {
-            Image(systemName: isFavorite ? "star.fill" : "star")
+            Image(systemName: display.isFavorite ? "star.fill" : "star")
                 .font(.system(size: 12))
-                .foregroundColor(isFavorite ? .yellow : .blue)
+                .foregroundColor(display.isFavorite ? .yellow : .blue)
         }
         .frame(
             width: Constants.favoriteButtonHeight,
@@ -85,8 +82,8 @@ private extension BookGridItemView {
         display: .init(
             id: "1",
             imageUrl: "",
-            title: "Lorem ipsum"
-        ), 
-        isFavorite: false
+            title: "Lorem ipsum",
+            isFavorite: true
+        )
     ) { }
 }

@@ -27,7 +27,6 @@ struct HomeView: View {
                     ForEach(presenter.books, id: \.id) { book in
                         BookGridItemView(
                             display: .init(book),
-                            isFavorite: book.isFavorite,
                             onFavoriteTapped: { [weak presenter] in
                                 presenter?.toggleFavorite(for: book.id)
                         })

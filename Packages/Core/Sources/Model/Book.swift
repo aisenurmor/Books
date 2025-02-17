@@ -37,7 +37,7 @@ public struct Book: Identifiable {
 }
 
 // MARK: - BookCategory
-public struct BookCategory: Identifiable {
+public struct BookCategory: Identifiable, Hashable {
     public let id: String
     public let name: String
 }
