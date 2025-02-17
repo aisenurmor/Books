@@ -31,14 +31,16 @@ struct BookGridItemView: View {
             AsyncImage(url: display.imageUrl) { image in
                 image
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .scaledToFill()
+                    .frame(height: Constants.imageHeight)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .aspectRatio(1, contentMode: .fill)
+                    .clipped()
             } placeholder: {
                 ProgressView()
-                    .frame(maxWidth: .infinity)
+                    .frame(height: Constants.imageHeight)
             }
-            .frame(height: Constants.imageHeight)
             .background(.gray)
-            .clipped()
             .overlay(alignment: .topTrailing) {
                 favoriteButton()
             }
