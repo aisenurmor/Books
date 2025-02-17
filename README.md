@@ -44,8 +44,6 @@ Each feature module is structured according to **VIPER** architecture:
 
 Clone the project:
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
 ```bash
 git clone https://github.com/aisenurmor/Books.git
 ```
