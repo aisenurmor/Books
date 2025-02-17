@@ -15,7 +15,7 @@ struct BookDetailInteractor: BookDetailInteractorProtocol {
     
     init(
         entity: BookDetailEntityProtocol = BookDetailEntity(),
-        repository: BooksRepositoryProtocol = BooksRepository()
+        repository: BooksRepositoryProtocol
     ) {
         self.entity = entity
         self.repository = repository

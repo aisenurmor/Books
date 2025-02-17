@@ -45,8 +45,16 @@
         }
       }
     },
-    "Favorites" : {
-
+    "favoritesTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorites"
+          }
+        }
+      }
     },
     "homeTitle" : {
       "extractionState" : "manual",
@@ -102,9 +110,6 @@
           }
         }
       }
-    },
-    "Screen 2" : {
-
     },
     "searchBookPlaceholder" : {
       "extractionState" : "manual",

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct BookGridItemView: View {
-    typealias FavoriteAction = () -> Void
+public struct BookGridItemView: View {
+    public typealias FavoriteAction = () -> Void
     
     private enum Constants {
         static let favoriteButtonHeight: CGFloat = 20
@@ -18,7 +18,7 @@ struct BookGridItemView: View {
     private let display: Display
     private let onFavoriteTapped: FavoriteAction
     
-    init(
+    public init(
         display: Display,
         onFavoriteTapped: @escaping FavoriteAction
     ) {
@@ -26,7 +26,7 @@ struct BookGridItemView: View {
         self.onFavoriteTapped = onFavoriteTapped
     }
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 12) {
             AsyncImage(url: display.imageUrl) { image in
                 image
@@ -39,8 +39,9 @@ struct BookGridItemView: View {
             } placeholder: {
                 ProgressView()
                     .frame(height: Constants.imageHeight)
+                    .frame(minWidth: 0, maxWidth: .infinity)
             }
-            .background(.gray)
+            .background(.gray.opacity(0.3))
             .overlay(alignment: .topTrailing) {
                 favoriteButton()
             }

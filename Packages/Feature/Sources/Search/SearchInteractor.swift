@@ -15,7 +15,7 @@ struct SearchInteractor: SearchInteractorProtocol {
     
     init(
         entity: SearchEntityProtocol = SearchEntity(),
-        repository: BooksRepositoryProtocol = BooksRepository()
+        repository: BooksRepositoryProtocol
     ) {
         self.entity = entity
         self.repository = repository

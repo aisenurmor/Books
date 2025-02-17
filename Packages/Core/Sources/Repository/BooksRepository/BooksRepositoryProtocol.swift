@@ -9,7 +9,7 @@ import Combine
 import Model
 
 public protocol BooksRepositoryProtocol {
-    var booksSubject: CurrentValueSubject<[Book], Never> { get }
+    var booksEventSubject: PassthroughSubject<Bool, Never> { get }
     
     func create(books: [BookResponseModel]) async throws -> [Book]
     func toggleFavorite(for bookId: String) async throws

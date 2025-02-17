@@ -25,10 +25,10 @@ protocol HomePresenterProtocol: ObservableObject {
 
 // MARK: - Interactor Protocol
 protocol HomeInteractorProtocol {
-    func fetchBooks(refresh: Bool, sortOption: SortOption) async throws -> [Book]
+    func fetchBooks(with sortOption: SortOption) async throws -> [Book]
     func toggleFavorite(for id: String) async
     func sortBooks(by option: SortOption) async throws -> [Book]
-    func observeFavorites() async -> AnyPublisher<[Book], Never>
+    func observeFavoritesChanges() async -> AnyPublisher<Bool, Never>
 }
 
 // MARK: - Router Protocol

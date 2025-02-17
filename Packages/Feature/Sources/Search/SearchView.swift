@@ -68,8 +68,10 @@ private extension SearchView {
             ForEach(presenter.categories) { category in
                 Text(category.name)
                     .tag(category as BookCategory?)
+                    
             }
         }
+        .font(.system(size: 14))
         .pickerStyle(.navigationLink)
         .labelsHidden()
         .padding(.vertical, 8)
