@@ -16,9 +16,6 @@ protocol HomeViewProtocol: AnyObject {
 
 // MARK: - Presenter Protocol
 protocol HomePresenterProtocol: ObservableObject {
-    
-    var books: [Book] { get }
-    
     func viewDidLoad()
     func loadMoreIfNeeded(for book: Book)
     func toggleFavorite(for id: String)
@@ -28,9 +25,8 @@ protocol HomePresenterProtocol: ObservableObject {
 
 // MARK: - Interactor Protocol
 protocol HomeInteractorProtocol {
-    func fetchMoreBooks() async throws -> [Book]
-    func refreshBooks() async throws -> [Book]
-    func toggleFavorite(for id: String) async throws
+    func fetchBooks(refresh: Bool, sortOption: SortOption) async throws -> [Book]
+    func toggleFavorite(for id: String) async
     func sortBooks(by option: SortOption) async throws -> [Book]
     func observeFavorites() async -> AnyPublisher<[Book], Never>
 }

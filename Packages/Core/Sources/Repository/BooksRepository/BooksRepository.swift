@@ -14,7 +14,7 @@ public final actor BooksRepository: BooksRepositoryProtocol {
     
     public static let shared = BooksRepository()
     
-    private let booksSubject = CurrentValueSubject<[Book], Never>([])
+    public let booksSubject = CurrentValueSubject<[Book], Never>([])
     private let storageService: FavoritesStorageProtocol
     
     public init(storageService: FavoritesStorageProtocol = FavoritesStorage()) {
@@ -41,7 +41,7 @@ public final actor BooksRepository: BooksRepositoryProtocol {
         update(with: bookId, isFavorite: favorites.contains(bookId))
     }
     
-    public nonisolated var booksPublisher: AnyPublisher<[Book], Never> {
+    public var booksPublisher: AnyPublisher<[Book], Never> {
         booksSubject.eraseToAnyPublisher()
     }
     
@@ -93,6 +93,6 @@ private extension BooksRepository {
         guard let index = booksSubject.value.firstIndex(where: { $0.id == bookId }) else { return }
         var updatedBooks = booksSubject.value
         updatedBooks[index].isFavorite = isFavorite
-        booksSubject.value = updatedBooks
+        booksSubject.send(updatedBooks)
     }
 }

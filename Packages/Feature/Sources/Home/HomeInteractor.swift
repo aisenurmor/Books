@@ -31,23 +31,27 @@ final class HomeInteractor: HomeInteractorProtocol {
         self.networkService = networkService
     }
     
-    func fetchMoreBooks() async throws -> [Book] {
-        currentPage += 1
+    func fetchBooks(refresh: Bool, sortOption: SortOption) async throws -> [Book] {
+        currentPage = refresh ? 1 : (currentPage + 1)
+        
         let itemCount = currentPage * pageSize
         
-        let newBooks = try await fetchBooksFromNetwork(itemCount)
-        let savedBooks = try await saveBooksToRepository(newBooks)
+        let books = try await fetchBooksFromNetwork(itemCount)
+        let savedBooks = try await saveBooksToRepository(books)
+        
+        if sortOption != .all {
+            return try await sortBooks(by: sortOption)
+        }
         
         return savedBooks
     }
     
-    func refreshBooks() async throws -> [Book] {
-        currentPage = 1
-        return try await fetchBooks(pageSize)
-    }
-    
-    func toggleFavorite(for id: String) async throws {
-        try await repository.toggleFavorite(for: id)
+    func toggleFavorite(for id: String) async {
+        do {
+            try await repository.toggleFavorite(for: id)
+        } catch {
+            debugPrint("An error occured when toggle favorite: \(error.localizedDescription)")
+        }
     }
     
     func sortBooks(by option: SortOption) async throws -> [Book] {
@@ -55,27 +59,19 @@ final class HomeInteractor: HomeInteractorProtocol {
     }
     
     func observeFavorites() async -> AnyPublisher<[Book], Never> {
-        repository.booksPublisher
+        repository.booksSubject.eraseToAnyPublisher()
     }
 }
 
 // MARK: - Private Methods
 private extension HomeInteractor {
     
-    func fetchBooks(_ itemCount: Int) async throws -> [Book] {
-        let books = try await fetchBooksFromNetwork(itemCount)
-        return try await saveBooksToRepository(books)
-    }
-    
     func fetchBooksFromNetwork(_ itemCount: Int) async throws -> [BookResponseModel] {
         try await withCheckedThrowingContinuation { continuation in
             networkService.fetchFeed(itemCount)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
-                    switch completion {
-                    case .finished:
-                        break
-                    case .failure(let error):
+                    if case .failure(let error) = completion {
                         continuation.resume(throwing: error)
                     }
                 } receiveValue: { response in
@@ -86,10 +82,6 @@ private extension HomeInteractor {
     }
     
     func saveBooksToRepository(_ books: [BookResponseModel]) async throws -> [Book] {
-        do {
-            return try await repository.create(books: books)
-        } catch {
-            throw error
-        }
+        return try await repository.create(books: books)
     }
 }

@@ -8,6 +8,7 @@
 import Helper
 import Model
 import SwiftUI
+import UIComponents
 
 struct HomeView: View {
     
@@ -22,54 +23,95 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(presenter.books, id: \.id) { book in
-                        BookGridItemView(
-                            display: .init(book),
-                            onFavoriteTapped: { [weak presenter] in
-                                presenter?.toggleFavorite(for: book.id)
-                        })
-                        .onAppear { [weak presenter] in
-                            presenter?.loadMoreIfNeeded(for: book)
+            content
+                .navigationTitle("booksTitle".localized)
+                .toolbar {
+                    toolbarItems
+                }
+                .confirmationDialog("sortBooksTitle".localized, isPresented: $showingSortOptions) {
+                    sortOptions
+                }
+                .onAppear { [weak presenter] in
+                    presenter?.viewDidLoad()
+                }
+        }
+    }
+}
+
+private extension HomeView {
+    
+    @ViewBuilder
+    var content: some View {
+        switch presenter.viewState {
+        case .loading:
+            ProgressView()
+            
+        case .loaded(let state):
+            bookGrid(state: state)
+            
+        case .error(let message):
+            ErrorView(message: message) {
+                presenter.retry()
+            }
+        }
+    }
+    
+    func bookGrid(state: HomeState) -> some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(state.books, id: \.id) { book in
+                    BookGridItemView(
+                        display: .init(book),
+                        onFavoriteTapped: { [weak presenter] in
+                            presenter?.toggleFavorite(for: book.id)
                         }
-                        .onTapGesture { [weak presenter] in
-                            presenter?.navigateToDetail(by: book.id)
-                        }
+                    )
+                    .onAppear { [weak presenter] in
+                        presenter?.loadMoreIfNeeded(for: book)
                     }
-                }
-                .padding()
-                
-                if presenter.isLoading {
-                    ProgressView()
-                }
-            }
-            .navigationTitle("booksTitle".localized)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingSortOptions.toggle()
-                    } label: {
-                        Image(systemName: "arrow.up.arrow.down")
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { [weak presenter] in
-                        presenter?.navigateToSearch()
-                    } label: {
-                        Image(systemName: "magnifyingglass")
+                    .onTapGesture { [weak presenter] in
+                        presenter?.navigateToDetail(by: book.id)
                     }
                 }
             }
-            .confirmationDialog("sortBooksTitle".localized, isPresented: $showingSortOptions) {
-                ForEach(SortOption.allCases, id: \.self) { option in
-                    Button(option.title.localized) { [weak presenter] in
-                        presenter?.sort(by: option)
-                    }
+            .padding()
+            
+            if state.isPaginationLoading {
+                ProgressView()
+            }
+            
+            if state.isEndOfList {
+                Text("noMoreBooks".localized)
+                    .foregroundColor(.secondary)
+                    .padding()
+            }
+        }
+    }
+    
+    var toolbarItems: some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSortOptions.toggle()
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
                 }
             }
-            .onAppear { [weak presenter] in
-                presenter?.viewDidLoad()
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    presenter.navigateToSearch()
+                } label: {
+                    Image(systemName: "magnifyingglass")
+                }
+            }
+        }
+    }
+    
+    var sortOptions: some View {
+        ForEach(SortOption.allCases, id: \.self) { option in
+            Button(option.title.localized) {
+                presenter.sort(by: option)
             }
         }
     }
