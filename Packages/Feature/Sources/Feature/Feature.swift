@@ -7,4 +7,5 @@
 
 @_exported import Home
 @_exported import Search
+@_exported import BookDetail
 @_exported import NetworkService

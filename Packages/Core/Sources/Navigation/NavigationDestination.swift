@@ -9,14 +9,14 @@ import Foundation
 import Model
 
 public enum NavigationDestination: RouterDestination {
-    case detail(book: Book)
+    case detail(id: String)
     case search
     case favorites
     
     public var description: String {
         switch self {
-        case .detail(let book):
-            return "detail-\(book.id)"
+        case .detail(let id):
+            return "detail-\(id)"
         case .search:
             return "search"
         case .favorites:

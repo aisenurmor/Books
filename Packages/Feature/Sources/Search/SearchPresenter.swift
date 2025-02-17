@@ -8,14 +8,15 @@
 import Combine
 import Foundation
 import Model
+import UICore
 
-final class SearchPresenter: ObservableObject {
+final class SearchPresenter: SearchPresenterProtocol {
     
     @Published var selectedCategory: BookCategory? = nil
     @Published var searchText = ""
     
+    @Published private(set) var viewState: ViewState<[Book]> = .loading
     @Published private(set) var categories: [BookCategory] = []
-    @Published private(set) var searchResults: [Book] = []
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -33,27 +34,31 @@ final class SearchPresenter: ObservableObject {
         setupBindings()
     }
     
-    func navigateToDetail(for book: Book) {
-        router.navigateToDetail(for: book)
+    func navigateToDetail(by id: String) {
+        router.navigateToDetail(by: id)
     }
+    
+    func retry() {
+        viewState = .loading
+        searchBooks(query: searchText, category: selectedCategory)
+    }
+}
+
+// MARK: - Private Methods
+private extension SearchPresenter {
     
     func searchBooks(query: String, category: BookCategory? = nil) {
         Task {
             do {
                 let results = try await interactor.searchBooks(query: query, category: category)
                 await MainActor.run {
-                    searchResults = results
+                    viewState = .loaded(results)
                 }
             } catch {
-                debugPrint("Error searching books: \(error)")
-                searchResults = []
+                viewState = .error(message: "loadBooksFailedMessage".localized)
             }
         }
     }
-}
-
-// MARK: - Private Methods
-private extension SearchPresenter {
     
     func setupBindings() {
         Publishers.CombineLatest($searchText, $selectedCategory)

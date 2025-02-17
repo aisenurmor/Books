@@ -16,5 +16,6 @@ public protocol BooksRepositoryProtocol {
     func getFavorites() async throws -> Set<String>
     func sortBooks(by option: SortOption) async throws -> [Book]
     func getCategories() async throws -> [BookCategory]
+    func getBookDetail(by id: String) async throws -> Book?
     func searchBooks(query: String, category: BookCategory?) async throws -> [Book]
 }

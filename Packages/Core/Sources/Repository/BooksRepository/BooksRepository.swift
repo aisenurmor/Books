@@ -49,6 +49,10 @@ public final actor BooksRepository: BooksRepositoryProtocol {
         try await storageService.getFavorites()
     }
     
+    public func getBookDetail(by id: String) async throws -> Book? {
+        booksSubject.value.first { $0.id == id }
+    }
+    
     public func sortBooks(by option: SortOption) -> [Book] {
         let books = booksSubject.value
         
@@ -89,6 +93,6 @@ private extension BooksRepository {
         guard let index = booksSubject.value.firstIndex(where: { $0.id == bookId }) else { return }
         var updatedBooks = booksSubject.value
         updatedBooks[index].isFavorite = isFavorite
-        booksSubject.send(updatedBooks)
+        booksSubject.value = updatedBooks
     }
 }

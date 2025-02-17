@@ -37,7 +37,7 @@ extension SearchResultRow {
                 title: book.title,
                 imageUrl: URL(string: book.imageUrl),
                 author: book.author,
-                publishDate: book.publishDate.formatted()
+                publishDate: book.publishDate.fullDateFormat
             )
         }
     }
