@@ -10,20 +10,20 @@ import Foundation
 import Model
 import UICore
 
-final class SearchPresenter: SearchPresenterProtocol {
+public final class SearchPresenter: SearchPresenterProtocol {
     
-    @Published var selectedCategory: BookCategory? = nil
-    @Published var searchText = ""
+    @Published public var selectedCategory: BookCategory? = nil
+    @Published public var searchText = ""
     
-    @Published private(set) var viewState: ViewState<[Book]> = .loading
-    @Published private(set) var categories: [BookCategory] = []
+    @Published public var viewState: ViewState<[Book]> = .loading
+    @Published public var categories: [BookCategory] = []
     
     private var cancellables = Set<AnyCancellable>()
     
     private let interactor: SearchInteractorProtocol
     private let router: SearchRouterProtocol
     
-    init(
+    public init(
         interactor: SearchInteractorProtocol,
         router: SearchRouterProtocol
     ) {
@@ -34,11 +34,11 @@ final class SearchPresenter: SearchPresenterProtocol {
         setupBindings()
     }
     
-    func navigateToDetail(by id: String) {
+    public func navigateToDetail(by id: String) {
         router.navigateToDetail(by: id)
     }
     
-    func retry() {
+    public func retry() {
         viewState = .loading
         searchBooks(query: searchText, category: selectedCategory)
     }

@@ -91,7 +91,11 @@ let package = Package(
         ),
         .testTarget(
             name: "Tests",
-            dependencies: []
+            dependencies: [
+                .product(name: "Repository", package: "Core"),
+                
+                "Feature"
+            ]
         )
     ]
 )

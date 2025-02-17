@@ -11,16 +11,42 @@ import Helper
 public struct BookResponseModel: Codable {
     
     public let id: String
-    let name: String
-    let artistName: String
-    let releaseDate: String
-    let kind: Kind
-    let artistId: String
-    let artistUrl: String
-    let artworkUrl100: String
-    let genres: [Genre]
-    let url: String
-    let contentAdvisoryRating: String?
+    public let name: String
+    public let artistName: String
+    public let releaseDate: String
+    public let kind: Kind
+    public let artistId: String
+    public let artistUrl: String
+    public let artworkUrl100: String
+    public let genres: [Genre]
+    public let url: String
+    public let contentAdvisoryRating: String?
+    
+    public init(
+        id: String,
+        name: String,
+        artistName: String,
+        releaseDate: String,
+        kind: Kind,
+        artistId: String,
+        artistUrl: String,
+        artworkUrl100: String,
+        genres: [Genre],
+        url: String,
+        contentAdvisoryRating: String?
+    ) {
+        self.id = id
+        self.name = name
+        self.artistName = artistName
+        self.releaseDate = releaseDate
+        self.kind = kind
+        self.artistId = artistId
+        self.artistUrl = artistUrl
+        self.artworkUrl100 = artworkUrl100
+        self.genres = genres
+        self.url = url
+        self.contentAdvisoryRating = contentAdvisoryRating
+    }
     
     public func toBook(isFavorite: Bool = false) -> Book {
         Book(
@@ -38,11 +64,17 @@ public struct BookResponseModel: Codable {
 // MARK: - Genre
 public struct Genre: Codable {
     
-    let genreId: String
-    let name: String
-    let url: String
+    public let genreId: String
+    public let name: String
+    public let url: String
     
-    func toBookCategory() -> BookCategory {
+    public init(genreId: String, name: String, url: String) {
+        self.genreId = genreId
+        self.name = name
+        self.url = url
+    }
+    
+    public func toBookCategory() -> BookCategory {
         BookCategory(id: genreId, name: name)
     }
 }

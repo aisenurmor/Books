@@ -10,17 +10,17 @@ import Foundation
 import Model
 import UICore
 
-final class HomePresenter: HomePresenterProtocol {
+public final class HomePresenter: HomePresenterProtocol {
     
-    @Published private(set) var viewState: ViewState<HomeState> = .loading
-    @Published private(set) var selectedSortOption: SortOption = .all
+    @Published public var viewState: ViewState<HomeState> = .loading
+    @Published public var selectedSortOption: SortOption = .all
     
     private var cancellables = Set<AnyCancellable>()
     
     private let interactor: HomeInteractorProtocol
     private let router: HomeRouterProtocol
     
-    init(
+    public init(
         interactor: HomeInteractorProtocol,
         router: HomeRouterProtocol
     ) {
@@ -32,7 +32,7 @@ final class HomePresenter: HomePresenterProtocol {
 }
 
 // MARK: - HomePresenterProtocol
-extension HomePresenter {
+public extension HomePresenter {
     
     func viewDidLoad() {
         guard case .loading = viewState else { return }

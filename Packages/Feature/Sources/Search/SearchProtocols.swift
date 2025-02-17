@@ -9,12 +9,12 @@ import Foundation
 import Model
 
 // MARK: View Protocol
-protocol SearchViewProtocol {
+public protocol SearchViewProtocol {
     var presenter: any SearchPresenterProtocol { get }
 }
 
 // MARK: - Presenter Protocol
-protocol SearchPresenterProtocol: ObservableObject {
+public protocol SearchPresenterProtocol: ObservableObject {
     var categories: [BookCategory] { get }
     
     func retry()
@@ -22,15 +22,15 @@ protocol SearchPresenterProtocol: ObservableObject {
 }
 
 // MARK: - Interactor Protocol
-protocol SearchInteractorProtocol {
+public protocol SearchInteractorProtocol {
     func getCategories() async throws -> [BookCategory]
     func searchBooks(query: String, category: BookCategory?) async throws -> [Book]
 }
 
 // MARK: - Router Protocol
-protocol SearchRouterProtocol {
+public protocol SearchRouterProtocol {
     func navigateToDetail(by id: String)
 }
 
 // MARK: - Entity Protocol
-protocol SearchEntityProtocol { }
+public protocol SearchEntityProtocol { }
