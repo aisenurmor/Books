@@ -8,4 +8,6 @@
 @_exported import Home
 @_exported import Search
 @_exported import BookDetail
+@_exported import Favorites
+@_exported import Shared
 @_exported import NetworkService

@@ -7,6 +7,7 @@
 
 import Helper
 import Model
+import Shared
 import SwiftUI
 import UIComponents
 
@@ -95,6 +96,7 @@ private extension HomeView {
                     showingSortOptions.toggle()
                 } label: {
                     Image(systemName: "arrow.up.arrow.down")
+                        .padding(2)
                 }
             }
             
@@ -103,6 +105,7 @@ private extension HomeView {
                     presenter.navigateToSearch()
                 } label: {
                     Image(systemName: "magnifyingglass")
+                        .padding(2)
                 }
             }
         }

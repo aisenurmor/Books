@@ -48,6 +48,7 @@ private extension BookDetailView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     bookImage(url: book.imageUrl)
+                        .background(.gray.opacity(0.3))
                     bookDetails(book: book)
                 }
             }
@@ -63,7 +64,7 @@ private extension BookDetailView {
     }
     
     func bookImage(url: String) -> some View {
-        let imageHeight: CGFloat = 300
+        let imageHeight: CGFloat = UIScreen.main.bounds.width*0.8
         
         return AsyncImage(url: URL(string: url)) { phase in
             switch phase {
@@ -92,7 +93,7 @@ private extension BookDetailView {
     }
     
     func bookDetails(book: Book) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 8) {
             Text(book.title)
                 .font(.title)
                 .fontWeight(.bold)
@@ -105,7 +106,7 @@ private extension BookDetailView {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 16)
     }
     
    @ViewBuilder

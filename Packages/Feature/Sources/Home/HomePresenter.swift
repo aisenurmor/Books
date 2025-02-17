@@ -36,7 +36,7 @@ extension HomePresenter {
     
     func viewDidLoad() {
         guard case .loading = viewState else { return }
-        fetchBooks(refresh: true)
+        fetchBooks()
     }
     
     func loadMoreIfNeeded(for book: Book) {
@@ -50,7 +50,7 @@ extension HomePresenter {
         var updatedState = state
         updatedState.isPaginationLoading = true
         viewState = .loaded(updatedState)
-        fetchBooks(refresh: false)
+        fetchBooks()
     }
     
     func toggleFavorite(for id: String) {
@@ -66,7 +66,8 @@ extension HomePresenter {
     }
     
     func retry() {
-        fetchBooks(refresh: false)
+        viewState = .loading
+        fetchBooks()
     }
     
     func navigateToSearch() {
@@ -83,19 +84,19 @@ private extension HomePresenter {
     
     func observeFavorites() {
         Task {
-            await interactor.observeFavorites()
+            await interactor.observeFavoritesChanges()
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] books in
-                    self?.updateState(with: books)
+                    self?.fetchSortedBooks()
                 }
                 .store(in: &cancellables)
         }
     }
     
-    func fetchBooks(refresh: Bool) {
+    func fetchBooks() {
         Task {
             do {
-                let books = try await interactor.fetchBooks(refresh: refresh, sortOption: selectedSortOption)
+                let books = try await interactor.fetchBooks(with: selectedSortOption)
                 updateState(with: books)
             } catch {
                 updateState(errorMessage: error.localizedDescription)

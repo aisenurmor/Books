@@ -8,15 +8,15 @@
 import Foundation
 import Model
 
-extension BookGridItemView {
+public extension BookGridItemView {
     
     struct Display: Identifiable {
-        var id: String
+        public var id: String
         let imageUrl: URL?
         let title: String
         let isFavorite: Bool
         
-        init(_ book: Book) {
+        public init(_ book: Book) {
             self.init(
                 id: book.id,
                 imageUrl: book.imageUrl,

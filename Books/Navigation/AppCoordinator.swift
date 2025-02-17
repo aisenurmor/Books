@@ -33,7 +33,7 @@ final class AppCoordinator: CoordinatorProtocol {
         case .detail(let id):
             BookDetailBuilder.build(with: id, coordinator: self)
         case .favorites:
-            Text("Favorites")
+            FavoritesBuilder.build(with: self)
         case .search:
             SearchBuilder.build(with: self)
         }

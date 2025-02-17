@@ -14,19 +14,23 @@ struct AppTabView: View {
     @StateObject private var coordinator = AppCoordinator()
     
     var body: some View {
-        NavigationStack(path: $coordinator.path) {
-            TabView {
-                HomeBuilder.build(with: coordinator)
-                    .tabItem {
-                        Label("homeTitle", systemImage: "house.fill")
-                    }
-                Text("Screen 2")
-                    .tabItem {
-                        Label("Favorites", systemImage: "star.fill")
-                    }
-            }
-            .navigationDestination(for: NavigationDestination.self) { screen in
-                coordinator.build(screen)
+        ZStack {
+            Color.blue.edgesIgnoringSafeArea(.all)
+            
+            NavigationStack(path: $coordinator.path) {
+                TabView {
+                    HomeBuilder.build(with: coordinator)
+                        .tabItem {
+                            Label("homeTitle", systemImage: "house.fill")
+                        }
+                    FavoritesBuilder.build(with: coordinator)
+                        .tabItem {
+                            Label("favoritesTitle", systemImage: "star.fill")
+                        }
+                }
+                .navigationDestination(for: NavigationDestination.self) { screen in
+                    coordinator.build(screen)
+                }
             }
         }
     }

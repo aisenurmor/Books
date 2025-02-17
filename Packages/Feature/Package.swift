@@ -22,7 +22,9 @@ let package = Package(
                 "Home",
                 "Search",
                 "BookDetail",
-                "NetworkService"
+                "Favorites",
+                "NetworkService",
+                "Shared"
             ]
         ),
         .target(
@@ -35,7 +37,8 @@ let package = Package(
                 .product(name: "UIComponents", package: "Core"),
                 .product(name: "UICore", package: "Core"),
                 
-                "NetworkService"
+                "NetworkService",
+                "Shared"
             ]
         ),
         .target(
@@ -61,10 +64,29 @@ let package = Package(
             ]
         ),
         .target(
+            name: "Favorites",
+            dependencies: [
+                .product(name: "Helper", package: "Core"),
+                .product(name: "Model", package: "Core"),
+                .product(name: "Navigation", package: "Core"),
+                .product(name: "Repository", package: "Core"),
+                .product(name: "UIComponents", package: "Core"),
+                .product(name: "UICore", package: "Core"),
+                
+                "Shared"
+            ]
+        ),
+        .target(
             name: "NetworkService",
             dependencies: [
                 .product(name: "Model", package: "Core"),
                 .product(name: "Network", package: "Core")
+            ]
+        ),
+        .target(
+            name: "Shared",
+            dependencies: [
+                .product(name: "Model", package: "Core")
             ]
         ),
         .testTarget(

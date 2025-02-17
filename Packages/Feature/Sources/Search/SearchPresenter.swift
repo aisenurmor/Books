@@ -98,7 +98,11 @@ private extension SearchPresenter {
     func getCategories() {
         Task {
             do {
-                categories = try await interactor.getCategories()
+                let categoryList = try await interactor.getCategories()
+                
+                await MainActor.run {
+                    self.categories = categoryList
+                }
             } catch {
                 debugPrint("An error occured when get categories: \(error.localizedDescription)")
             }

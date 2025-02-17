@@ -23,7 +23,7 @@ final class HomeInteractor: HomeInteractorProtocol {
     
     init(
         entity: HomeEntityProtocol = HomeEntity(),
-        repository: BooksRepositoryProtocol = BooksRepository(),
+        repository: BooksRepositoryProtocol,
         networkService: HomeServiceProtocol = HomeServiceLive()
     ) {
         self.entity = entity
@@ -31,9 +31,7 @@ final class HomeInteractor: HomeInteractorProtocol {
         self.networkService = networkService
     }
     
-    func fetchBooks(refresh: Bool, sortOption: SortOption) async throws -> [Book] {
-        currentPage = refresh ? 1 : (currentPage + 1)
-        
+    func fetchBooks(with sortOption: SortOption) async throws -> [Book] {
         let itemCount = currentPage * pageSize
         
         let books = try await fetchBooksFromNetwork(itemCount)
@@ -43,6 +41,7 @@ final class HomeInteractor: HomeInteractorProtocol {
             return try await sortBooks(by: sortOption)
         }
         
+        currentPage += 1
         return savedBooks
     }
     
@@ -58,8 +57,8 @@ final class HomeInteractor: HomeInteractorProtocol {
         return try await repository.sortBooks(by: option)
     }
     
-    func observeFavorites() async -> AnyPublisher<[Book], Never> {
-        repository.booksSubject.eraseToAnyPublisher()
+    func observeFavoritesChanges() async -> AnyPublisher<Bool, Never> {
+        repository.booksEventSubject.eraseToAnyPublisher()
     }
 }
 

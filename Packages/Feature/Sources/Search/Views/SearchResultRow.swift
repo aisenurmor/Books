@@ -47,6 +47,7 @@ struct SearchResultRow: View {
                 .foregroundColor(.secondary)
         }
         .padding(.vertical, 4)
+        .contentShape(Rectangle())
     }
 }
 
