@@ -79,6 +79,10 @@ extension HomePresenter: HomePresenterProtocol {
     func navigateToSearch() {
         router.navigateToSearch()
     }
+    
+    func navigateToDetail(by id: String) {
+        router.navigateToDetail(by: id)
+    }
 }
 
 // MARK: - Private Methods

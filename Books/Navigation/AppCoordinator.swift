@@ -30,8 +30,8 @@ final class AppCoordinator: CoordinatorProtocol {
     @ViewBuilder
     func build(_ destination: NavigationDestination) -> some View {
         switch destination {
-        case .detail(_):
-            Text("Detail")
+        case .detail(let id):
+            BookDetailBuilder.build(with: id, coordinator: self)
         case .favorites:
             Text("Favorites")
         case .search:

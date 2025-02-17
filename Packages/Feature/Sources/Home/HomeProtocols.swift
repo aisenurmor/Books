@@ -23,6 +23,7 @@ protocol HomePresenterProtocol: ObservableObject {
     func loadMoreIfNeeded(for book: Book)
     func toggleFavorite(for id: String)
     func navigateToSearch()
+    func navigateToDetail(by id: String)
 }
 
 // MARK: - Interactor Protocol
@@ -36,7 +37,7 @@ protocol HomeInteractorProtocol {
 
 // MARK: - Router Protocol
 protocol HomeRouterProtocol {
-    func navigateToDetail(for book: Book)
+    func navigateToDetail(by id: String)
     func navigateToSearch()
 }
 

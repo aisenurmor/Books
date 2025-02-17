@@ -33,6 +33,9 @@ struct HomeView: View {
                         .onAppear { [weak presenter] in
                             presenter?.loadMoreIfNeeded(for: book)
                         }
+                        .onTapGesture { [weak presenter] in
+                            presenter?.navigateToDetail(by: book.id)
+                        }
                     }
                 }
                 .padding()

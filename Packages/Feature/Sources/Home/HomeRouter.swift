@@ -16,8 +16,8 @@ final class HomeRouter: HomeRouterProtocol {
         self.coordinator = coordinator
     }
     
-    public func navigateToDetail(for book: Book) {
-        coordinator?.push(.detail(book: book))
+    public func navigateToDetail(by id: String) {
+        coordinator?.push(.detail(id: id))
     }
     
     public func navigateToSearch() {

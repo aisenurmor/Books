@@ -35,6 +35,14 @@ let package = Package(
             name: "Storage",
             targets: ["Storage"]
         ),
+        .library(
+            name: "UIComponents",
+            targets: ["UIComponents"]
+        ),
+        .library(
+            name: "UICore",
+            targets: ["UICore"]
+        )
     ],
     targets: [
         .target(
@@ -64,6 +72,12 @@ let package = Package(
         ),
         .target(
             name: "Storage"
+        ),
+        .target(
+            name: "UIComponents"
+        ),
+        .target(
+            name: "UICore"
         )
     ]
 )

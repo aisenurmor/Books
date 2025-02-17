@@ -12,6 +12,17 @@
         }
       }
     },
+    "authorBy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By %@"
+          }
+        }
+      }
+    },
     "booksTitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -34,9 +45,6 @@
         }
       }
     },
-    "Detail" : {
-
-    },
     "Favorites" : {
 
     },
@@ -51,8 +59,63 @@
         }
       }
     },
+    "loadBookDetailsFailedMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load book details"
+          }
+        }
+      }
+    },
+    "loadBooksFailedMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load books"
+          }
+        }
+      }
+    },
+    "publishedDate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Published on %@"
+          }
+        }
+      }
+    },
     "Screen 2" : {
 
+    },
+    "searchBookPlaceholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search a book..."
+          }
+        }
+      }
+    },
+    "searchTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        }
+      }
     },
     "sortBooksTitle" : {
       "extractionState" : "manual",

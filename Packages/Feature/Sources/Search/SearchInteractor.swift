@@ -8,7 +8,7 @@
 import Model
 import Repository
 
-final class SearchInteractor: SearchInteractorProtocol {
+struct SearchInteractor: SearchInteractorProtocol {
     
     private let entity: SearchEntityProtocol
     private let repository: BooksRepositoryProtocol

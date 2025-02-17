@@ -21,6 +21,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 "Search",
+                "BookDetail",
                 "NetworkService"
             ]
         ),
@@ -31,6 +32,8 @@ let package = Package(
                 .product(name: "Model", package: "Core"),
                 .product(name: "Navigation", package: "Core"),
                 .product(name: "Repository", package: "Core"),
+                .product(name: "UIComponents", package: "Core"),
+                .product(name: "UICore", package: "Core"),
                 
                 "NetworkService"
             ]
@@ -41,7 +44,20 @@ let package = Package(
                 .product(name: "Helper", package: "Core"),
                 .product(name: "Model", package: "Core"),
                 .product(name: "Navigation", package: "Core"),
-                .product(name: "Repository", package: "Core")
+                .product(name: "Repository", package: "Core"),
+                .product(name: "UIComponents", package: "Core"),
+                .product(name: "UICore", package: "Core"),
+            ]
+        ),
+        .target(
+            name: "BookDetail",
+            dependencies: [
+                .product(name: "Helper", package: "Core"),
+                .product(name: "Model", package: "Core"),
+                .product(name: "Navigation", package: "Core"),
+                .product(name: "Repository", package: "Core"),
+                .product(name: "UIComponents", package: "Core"),
+                .product(name: "UICore", package: "Core"),
             ]
         ),
         .target(

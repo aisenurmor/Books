@@ -16,6 +16,9 @@ protocol SearchViewProtocol {
 // MARK: - Presenter Protocol
 protocol SearchPresenterProtocol: ObservableObject {
     var categories: [BookCategory] { get }
+    
+    func retry()
+    func navigateToDetail(by id: String)
 }
 
 // MARK: - Interactor Protocol
@@ -26,8 +29,8 @@ protocol SearchInteractorProtocol {
 
 // MARK: - Router Protocol
 protocol SearchRouterProtocol {
-    func navigateToDetail(for book: Book)
+    func navigateToDetail(by id: String)
 }
 
-// MARK: - SearchEntityProtocol
+// MARK: - Entity Protocol
 protocol SearchEntityProtocol { }
