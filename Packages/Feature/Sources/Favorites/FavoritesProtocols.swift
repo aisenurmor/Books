@@ -22,7 +22,7 @@ protocol FavoritesPresenterProtocol: ObservableObject {
 }
 
 // MARK: - Interactor Protocol
-protocol FavoritesInteractorProtocol {
+public protocol FavoritesInteractorProtocol {
     func fetchFavorites() async throws -> [Book]
     func toggleFavorite(for id: String) async
     func observeFavoritesChanges() async -> AnyPublisher<Bool, Never>

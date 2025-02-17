@@ -10,21 +10,23 @@ import Foundation
 import Model
 
 // MARK: - View Protocol
-protocol HomeViewProtocol: AnyObject {
+public protocol HomeViewProtocol: AnyObject {
     var presenter: any HomePresenterProtocol { get }
 }
 
 // MARK: - Presenter Protocol
-protocol HomePresenterProtocol: ObservableObject {
+public protocol HomePresenterProtocol: ObservableObject {
     func viewDidLoad()
     func loadMoreIfNeeded(for book: Book)
     func toggleFavorite(for id: String)
+    func sort(by option: SortOption)
+    func retry()
     func navigateToSearch()
     func navigateToDetail(by id: String)
 }
 
 // MARK: - Interactor Protocol
-protocol HomeInteractorProtocol {
+public protocol HomeInteractorProtocol {
     func fetchBooks(with sortOption: SortOption) async throws -> [Book]
     func toggleFavorite(for id: String) async
     func sortBooks(by option: SortOption) async throws -> [Book]
@@ -32,10 +34,10 @@ protocol HomeInteractorProtocol {
 }
 
 // MARK: - Router Protocol
-protocol HomeRouterProtocol {
+public protocol HomeRouterProtocol {
     func navigateToDetail(by id: String)
     func navigateToSearch()
 }
 
 // MARK: - Entity Protocol
-protocol HomeEntityProtocol { }
+public protocol HomeEntityProtocol { }

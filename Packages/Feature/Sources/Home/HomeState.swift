@@ -7,12 +7,18 @@
 
 import Model
 
-struct HomeState {
-    var books: [Book]
-    var isPaginationLoading: Bool
-    var isEndOfList: Bool
+public struct HomeState {
+    public var books: [Book]
+    public var isPaginationLoading: Bool
+    public var isEndOfList: Bool
     
-    static var empty: HomeState {
+    public static var empty: HomeState {
         HomeState(books: [], isPaginationLoading: false, isEndOfList: false)
+    }
+    
+    public init(books: [Book], isPaginationLoading: Bool, isEndOfList: Bool) {
+        self.books = books
+        self.isPaginationLoading = isPaginationLoading
+        self.isEndOfList = isEndOfList
     }
 }

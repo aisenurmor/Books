@@ -8,12 +8,12 @@
 import Model
 import Repository
 
-struct SearchInteractor: SearchInteractorProtocol {
+public struct SearchInteractor: SearchInteractorProtocol {
     
     private let entity: SearchEntityProtocol
     private let repository: BooksRepositoryProtocol
     
-    init(
+    public init(
         entity: SearchEntityProtocol = SearchEntity(),
         repository: BooksRepositoryProtocol
     ) {
@@ -21,11 +21,11 @@ struct SearchInteractor: SearchInteractorProtocol {
         self.repository = repository
     }
     
-    func getCategories() async throws -> [BookCategory] {
+    public func getCategories() async throws -> [BookCategory] {
         try await repository.getCategories()
     }
     
-    func searchBooks(query: String, category: BookCategory?) async throws -> [Book] {
+    public func searchBooks(query: String, category: BookCategory?) async throws -> [Book] {
         guard !query.isEmpty else { return [] }
         let books: [Book] = try await repository.searchBooks(query: query, category: category)
         return books

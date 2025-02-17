@@ -11,7 +11,7 @@ import Model
 import NetworkService
 import Repository
 
-final class HomeInteractor: HomeInteractorProtocol {
+public final class HomeInteractor: HomeInteractorProtocol {
     
     private let pageSize = 20
     private var currentPage = 1
@@ -21,7 +21,7 @@ final class HomeInteractor: HomeInteractorProtocol {
     private let repository: BooksRepositoryProtocol
     private let networkService: HomeServiceProtocol
     
-    init(
+    public init(
         entity: HomeEntityProtocol = HomeEntity(),
         repository: BooksRepositoryProtocol,
         networkService: HomeServiceProtocol = HomeServiceLive()
@@ -31,7 +31,7 @@ final class HomeInteractor: HomeInteractorProtocol {
         self.networkService = networkService
     }
     
-    func fetchBooks(with sortOption: SortOption) async throws -> [Book] {
+    public func fetchBooks(with sortOption: SortOption) async throws -> [Book] {
         let itemCount = currentPage * pageSize
         
         let books = try await fetchBooksFromNetwork(itemCount)
@@ -45,7 +45,7 @@ final class HomeInteractor: HomeInteractorProtocol {
         return savedBooks
     }
     
-    func toggleFavorite(for id: String) async {
+    public func toggleFavorite(for id: String) async {
         do {
             try await repository.toggleFavorite(for: id)
         } catch {
@@ -53,11 +53,11 @@ final class HomeInteractor: HomeInteractorProtocol {
         }
     }
     
-    func sortBooks(by option: SortOption) async throws -> [Book] {
+    public func sortBooks(by option: SortOption) async throws -> [Book] {
         return try await repository.sortBooks(by: option)
     }
     
-    func observeFavoritesChanges() async -> AnyPublisher<Bool, Never> {
+    public func observeFavoritesChanges() async -> AnyPublisher<Bool, Never> {
         repository.booksEventSubject.eraseToAnyPublisher()
     }
 }
